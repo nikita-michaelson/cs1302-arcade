@@ -8,8 +8,8 @@ that the Markdown is transformed into nice looking HTML.
 ## TUE 2019-04-16 @ 11:55 PM EST
     
 1. **DONE:** Downloaded the skeleton code.
-  - Decided to do 2048 and Frogger.
-  - Began planning 2048
+   - Decided to do 2048 and Frogger.
+   - Began planning 2048
         - will use image views for tiles in a grid pane.
         - will update tiles on key pressed instead of released.
         - hold gridpane and tool bar for score.
@@ -28,4 +28,4 @@ that the Markdown is transformed into nice looking HTML.
 
 3. **PROB:**
     - Scheduling issues.
-    _ Concerns about the efficiency of using image views.
+    - Concerns about the efficiency of using image views.
