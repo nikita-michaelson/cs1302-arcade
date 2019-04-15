@@ -5,23 +5,11 @@ for this project. Please keep this document organized using Markdown. If you
 click on this file in your team's GitHub repository website, then you will see
 that the Markdown is transformed into nice looking HTML.
 
-Here is a sample entry (delete this line; also: feel free to copy/paste/modify):
-
-## SUN 2019-04-05 @ 11:55 PM EST
-
-1. **DONE:** Downloaded the skeleton code.
-
-2. **TODO:** Finish reading the project description.
-
-3. **PROB:** Had a hard time scheduling physicial meetings with each other at
-   first, but now that we've settled on a regular day/time things are looking
-   great!
-    
-## SUN 2019-04-05 @ 11:55 PM EST
+## TUE 2019-04-16 @ 11:55 PM EST
     
 1. **DONE:** Downloaded the skeleton code.
-   - Decided to do 2048 and Frogger.
-   - Began planning 2048
+  - Decided to do 2048 and Frogger.
+  - Began planning 2048
         - will use image views for tiles in a grid pane.
         - will update tiles on key pressed instead of released.
         - hold gridpane and tool bar for score.
