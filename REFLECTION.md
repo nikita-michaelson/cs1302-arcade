@@ -16,3 +16,14 @@ Here is a sample entry (delete this line; also: feel free to copy/paste/modify):
 3. **PROB:** Had a hard time scheduling physicial meetings with each other at
    first, but now that we've settled on a regular day/time things are looking
    great!
+    
+## SUN 2019-04-05 @ 11:55 PM EST
+
+1. **DONE:** Downloaded the skeleton code.Decided to do 2048 and Frogger.Began planning 2048
+    ie. 
+
+2. **TODO:** Finish reading the project description.
+
+3. **PROB:** Had a hard time scheduling physicial meetings with each other at
+   first, but now that we've settled on a regular day/time things are looking
+   great!
