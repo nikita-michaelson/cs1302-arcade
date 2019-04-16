@@ -12,7 +12,9 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-
+import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 public class ArcadeApp extends Application {
 
     Group group = new Group();           // main container
@@ -57,13 +59,12 @@ public class ArcadeApp extends Application {
          * (rectangle) in a group.
          */
 
-        r.setX(50);                                // 50px in the x direction (right)
-        r.setY(50);                                // 50ps in the y direction (down)
-        group.getChildren().add(r);                // add to main container
-        r.setOnMouseClicked(createMouseHandler()); // clicks on the rectangle move it randomly
-        group.setOnKeyPressed(createKeyHandler()); // left-right key presses move the rectangle
-
-        Scene scene = new Scene(group, 640, 480);
+        VBox vbox = new VBox();
+        Text t = new Text ("Pick a Game");
+        Button frogger = new Button("Frogger");
+        Button tf8 = new Button("2048");
+        vbox.getChildren().addAll(t,frogger,tf8);
+        Scene scene = new Scene(vbox);
         stage.setTitle("cs1302-arcade!");
         stage.setScene(scene);
         stage.sizeToScene();
