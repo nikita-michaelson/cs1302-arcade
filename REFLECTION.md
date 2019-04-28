@@ -6,7 +6,7 @@ click on this file in your team's GitHub repository website, then you will see
 that the Markdown is transformed into nice looking HTML.
 
 ## TUE 2019-04-16 @ 11:55 PM EST
-    
+     
 1. **DONE:** Downloaded the skeleton code.
    - Decided to do 2048 and Frogger.
    - Began planning 2048
@@ -17,7 +17,7 @@ that the Markdown is transformed into nice looking HTML.
         - open on second stage. 
   - Made basic main screen with 2 non-functional buttons.
   - Made repositiory and added necessary pafrties.
-  - Made menu class and 2048 class called grid game.
+    
     
 2. **TODO:**
     - Find images for 2048
