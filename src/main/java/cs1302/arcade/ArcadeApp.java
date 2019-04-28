@@ -40,6 +40,7 @@ public class ArcadeApp extends Application {
 
     Scene twenty;
     GridPane grid;
+    Scene frog;
     /** {@inheritdoc} */
     @Override
     public void start(Stage stage) {
@@ -131,5 +132,61 @@ public class ArcadeApp extends Application {
         //checkMatch
         //move down
     }
+    //-------------------FROGGER----------------------
+    //level variable
+    //speed variable
+    //images of enemies
+    //images of frog
     
+    //moving elems use replace method so frog becomes road then moves and replace
+    public void startFrog(){
+        //set background
+        //javafx css set background
+        //set background of the scene^^
+        //place images
+        //set level as 1
+        //obstacles move in a repetitive motion
+        //grid pane
+        //if level one use level one speed 
+    }
+     public void frogLeft(){
+        //check column 3 to 0 for all rows
+        //checkMatch
+        //move left
+    }
+    public void frogRight(){
+        //check column 0 to 3 for all rows
+        //checkMatch
+        //move right
+    }
+    public void frogUp(){
+        //check row 0 to 3 for all cols
+        //checkMatch
+        //move up
+    }
+    public void frogDown(){
+        //check cow 3 to 0 for all cols
+        //checkMatch
+        //move down
+    }
+     public void enemyLeft(){
+         //check column 3 to 0 for all rows
+        //checkMatch
+        //move left
+     }
+    public void enemyRight(){
+        //check column 0 to 3 for all rows
+        //checkMatch
+        //move right
+    }
+    public void levelUp(){
+        //increase speed variable
+        //change level graphic
+        
+        }
+    public void replace(){
+
+
+    }
+   
 } // ArcadeApp
