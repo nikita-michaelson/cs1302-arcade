@@ -40,7 +40,17 @@ public class ArcadeApp extends Application {
 
     Scene twenty;
     GridPane grid;
+//----------frogger instance variables ------------------------
     Scene frog;
+    GridPane frogGrid;
+    int frogLevel;
+    int enemySpeed;
+    Image frog = new Image("frogger/frog.png");
+    Image log = new Image("frogger/log.png");
+    Image yellowCar = new Image("frogger/yellowcar.png");
+    Image greenCar = new Image("frogger/greencar.png");
+    Image water = new Image("frogger/water.png");
+    
     /** {@inheritdoc} */
     @Override
     public void start(Stage stage) {
@@ -133,13 +143,11 @@ public class ArcadeApp extends Application {
         //move down
     }
     //-------------------FROGGER----------------------
-    //level variable
-    //speed variable
-    //images of enemies
-    //images of frog
+ 
     
     //moving elems use replace method so frog becomes road then moves and replace
     public void startFrog(){
+
         //set background
         //javafx css set background
         //set background of the scene^^
