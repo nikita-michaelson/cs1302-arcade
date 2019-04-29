@@ -29,3 +29,21 @@ that the Markdown is transformed into nice looking HTML.
 3. **PROB:**
     - Scheduling issues.
     - Concerns about the efficiency of using image views.
+
+## TUE 2019-04-23 @ 11:55 PM EST
+1. **DONE:**
+    - Determine the logic for 2048
+    - Create the new scene for 2048
+    - Plan the methods for abstraction for 2048
+    - Wrote hte method signatures for 2048 methods
+    - Commented the logic for 2048
+    - Discussed the pros and cons of Tetris and frogger
+    - Planned frogger
+
+2. **TODO:**
+    - Finish 2048
+    - Write the back end of frogger
+    - Test 2048 for bugs
+
+3. **PROBS:**
+    - The idea of hit detection for frogger
