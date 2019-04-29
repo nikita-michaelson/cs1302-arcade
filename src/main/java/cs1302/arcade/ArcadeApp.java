@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.text.Text;
 public class ArcadeApp extends Application {
 
     /**
@@ -40,8 +41,9 @@ public class ArcadeApp extends Application {
 
     Scene twenty;
     GridPane grid;
-//----------frogger instance variables ------------------------
-    Scene frog;
+
+    //frogger instance variables
+    Scene leapfrog;
     GridPane frogGrid;
     int frogLevel;
     int enemySpeed;
@@ -50,7 +52,12 @@ public class ArcadeApp extends Application {
     Image yellowCar = new Image("frogger/yellowcar.png");
     Image greenCar = new Image("frogger/greencar.png");
     Image water = new Image("frogger/water.png");
-    
+    String pointsString;
+    VBox frogVbox;
+    HBox info;
+    Label score;
+    Text points;
+    Label frogInstructions;
     /** {@inheritdoc} */
     @Override
     public void start(Stage stage) {
@@ -63,10 +70,12 @@ public class ArcadeApp extends Application {
 
         VBox vbox = new VBox();
         Text t = new Text ("Pick a Game");
-        Button frogger = new Button("Frogger");
+        Button frogButton = new Button("Frogger");
         Button tf8 = new Button("2048");
         EventHandler<ActionEvent> tf = () -> stage.setScene(twenty);
-        tf9.setOnAction(tf);
+        tf8.setOnAction(tf);
+        EventHandler<ActionEvent> frogButtonAction = () -> stage.setScene(leapFrog);
+        frogButton.setOnAction(frogButtonAction);
         vbox.getChildren().addAll(t,frogger,tf8);
         Scene scene = new Scene(vbox);
         stage.setTitle("cs1302-arcade!");
@@ -142,10 +151,34 @@ public class ArcadeApp extends Application {
         //checkMatch
         //move down
     }
-    //-------------------FROGGER----------------------
+    //FROGGER-----------------------------------------------------------------------------------------
  
     
     //moving elems use replace method so frog becomes road then moves and replace
+
+    public void initScene(){
+        pointsString = "0";
+        frogVbox = new VBox();
+        info = new HBox();
+        score = new Label("Score :");
+        frogInstructions = new Text("Use arrow keys to move.Good Luck Froggy!\n"+
+                                    "10 points per move in level 1.\n"+
+                                    "15 points per move in level 2.\n"+
+                                    "25 points per move in level 3.");
+        points = new Text(pointsString);
+        info.getChildren().addAll(Score,points,frogInstructions);
+        frogGrid = new GridPane();
+        
+        VBox.getChildren().addAll(info,frogGrid);
+
+
+    }
+    public void initialiseFrogGrid(GridPane frogGrid){
+        frogGrid.
+
+
+
+    }
     public void startFrog(){
 
         //set background

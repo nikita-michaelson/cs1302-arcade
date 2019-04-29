@@ -47,3 +47,19 @@ that the Markdown is transformed into nice looking HTML.
 
 3. **PROBS:**
     - The idea of hit detection for frogger
+## TUE 2019-04-30 @ 11:55 PM EST
+     
+1. **DONE:**
+    - Planned Froggers Methods
+    - Began Frogger Level Layout
+    - Predownloaded Frogger Images
+    - Wrote Frogger Score Display
+    
+2. **TODO:**
+    - Threading for Frogger Obstacles
+    - Finish Frogger
+    - Finish 2048
+    - Extensive Bug Testing
+    - Attempt Extra Credit
+3. **PROB:**
+    - Time Management
