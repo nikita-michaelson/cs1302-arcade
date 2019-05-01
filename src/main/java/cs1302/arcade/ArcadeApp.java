@@ -35,71 +35,26 @@ public class ArcadeApp extends Application {
      * node.
      * @return the key event handler
      */
-/*    
+/*
     private EventHandler<? super KeyEvent> createKeyHandlerTwenty() {
 	return event -> {
 	    System.out.println(event);
 	    if (event.getCode() == KeyCode.LEFT)
         {
-            
+
         }
 	    if (event.getCode() == KeyCode.RIGHT) r.setX(r.getX() + 10.0);
 	    // TODO bounds checking
 	};
     } // createKeyHandler
-*/  
+*/
     Scene twenty;
     GridPane grid;
     boolean whichGame = false;//when false, its 2048 , when true its, frogger
     //frogger instance variables
-    Scene leapfrog;
-    GridPane frogGrid;
-    int frogLevel;
-    int enemySpeed;
-    Image frogPic = new Image("frogger/frog.png");
-    ImageView frog = new ImageView(frogPic);
-    Image logPic = new Image("frogger/log.png");
-    ImageView log = new ImageView(logPic);
-    ImageView log2 = new ImageView(logPic);
-    ImageView log3 = new ImageView(logPic);
-    ImageView log4 = new ImageView(logPic);
-    ImageView log5 = new ImageView(logPic);
-    Image yellowCarPic = new Image("frogger/yellowcar.png");
-    ImageView yellowCar = new ImageView(yellowCarPic);
-    Image greenCarPic = new Image("frogger/greencar.png");
-    ImageView greenCar = new ImageView(greenCarPic);
-    ImageView greenCar2 = new ImageView(greenCarPic);
-    Image waterPic = new Image("frogger/water.png");
-    ImageView water = new ImageView(waterPic);
-    ImageView water2 = new ImageView(waterPic);
-    ImageView water3 = new ImageView(waterPic);
-    ImageView water4 = new ImageView(waterPic);
-    ImageView water5 = new ImageView(waterPic);
-    Image roadPic = new Image("frogger/road.png");
-    ImageView road = new ImageView(roadPic);
-    ImageView road2 = new ImageView(roadPic);
-    ImageView road3 = new ImageView(roadPic);
-    ImageView road4 = new ImageView(roadPic);
-    ImageView road5 = new ImageView(roadPic);
-    ImageView road6 = new ImageView(roadPic);
-    ImageView road7 = new ImageView(roadPic);
-    ImageView road8 = new ImageView(roadPic);
-    ImageView road9 = new ImageView(roadPic);
-    ImageView road10 = new ImageView(roadPic);
-    ImageView road11 = new ImageView(roadPic);
-    ImageView road12 = new ImageView(roadPic);
-    ImageView road13 = new ImageView(roadPic);
-    ImageView road14 = new ImageView(roadPic);
-    ImageView road15 = new ImageView(roadPic);
-    ImageView road16 = new ImageView(roadPic);
-    
-    String pointsString;
-    int pointsInt;
-    VBox frogVbox;
-    HBox info;
-    Text score;
-    Text points;
-    Text frogInstructions;
+
+
+
     /** {@inheritdoc} */
     @Override
     public void start(Stage stage) {
@@ -120,20 +75,21 @@ public class ArcadeApp extends Application {
             twentyStage.initModality(Modality.WINDOW_MODAL);
             twentyStage.initOwner(stage);
             twentyStage.sizeToScene();
-    
+
             twentyStage.show();
         };
         tf8.setOnAction(tf);
-        
+
         EventHandler<ActionEvent> frogButtonAction = event -> {
+            ArcadeFrog frogger = new ArcadeFrog();
             Stage frogStage = new Stage();
-            this.initScene();
-            frogStage.setScene(leapfrog);
+            frogStage.setScene(frogger.initScene());
             frogStage.initModality(Modality.WINDOW_MODAL);
             frogStage.initOwner(stage);
-            this.createKeyHandlerFrog();
+            //this.createKeyHandlerFrog();
             frogStage.sizeToScene();
             frogStage.show();
+
         };
         frogButton.setOnAction(frogButtonAction);
         // vbox.setStyle("-fx-background-image :url("frogger/introImage.png")");
@@ -143,7 +99,9 @@ public class ArcadeApp extends Application {
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
+
     } // start
+
 
     public void setTF8(){
         HBox hbox = new HBox();
@@ -181,7 +139,7 @@ public class ArcadeApp extends Application {
     }
     public void checkMatch(){
         //Check if gridpane = gridpane +1
-        //Check others if gridbane + 1 = blank 
+        //Check others if gridbane + 1 = blank
     }
     public void combine(){
         //checkMatch
@@ -217,6 +175,7 @@ public class ArcadeApp extends Application {
     /** Method that initialises frogger Scene
      *@param leapfrog is the scene being initialised
      */
+     /*
     public void initScene(){
         pointsString = Integer.toString(pointsInt);
         frogVbox = new VBox();
@@ -232,14 +191,16 @@ public class ArcadeApp extends Application {
         frogVbox.getChildren().addAll(info,frogGrid);
         score.setFill(Color.WHITE);
         frogInstructions.setFill(Color.WHITE);
-        frogVbox.setStyle("-fx-background-color : black"); 
+        frogVbox.setStyle("-fx-background-color : black");
         leapfrog = new Scene(frogVbox);
-        
+
     }
+    */
     public void frogImageFormat(ImageView imgv){
         imgv.setFitWidth(100);
         imgv.setFitHeight(100);
     }
+    /*
     public void imageFormatting(){
         this.frogImageFormat(frog);
         this.frogImageFormat(log);
@@ -270,12 +231,13 @@ public class ArcadeApp extends Application {
         this.frogImageFormat(road13);
         this.frogImageFormat(road14);
         this.frogImageFormat(road15);
-        this.frogImageFormat(road16);   
+        this.frogImageFormat(road16);
 
     }
     /** Method that initialises the frogger gridpane
      *@param frogGrid is the gridpane to be initialised
      */
+     /*
     public void initialiseFrogGrid(){
 //        Runnable r = () -> {
         //          Platform.runLater(() -> {
@@ -318,10 +280,12 @@ public class ArcadeApp extends Application {
         fg.setDaemon(true);
         fg.start();
         */
-    }
-    /** Method to update score displayed in frogger scene. 
-     *@param 
+    //}
+
+    /** Method to update score displayed in frogger scene.
+     *@param
      */
+     /*
     public void updateScore(int add)
         {
             pointsInt+=add;
@@ -331,13 +295,14 @@ public class ArcadeApp extends Application {
         String pointsString = Integer.toString(pointsInt);
         return pointsString;
     }
+    */
     /** Method to update difficulty of game */
-    public void updateLevel()
+  /*  public void updateLevel()
         {
 
         }
     /** Method to handle threading of obstacles and start movement.*/
-    public void startFrog(){
+  /*  public void startFrog(){
 
         //set background
         //javafx css set background
@@ -346,12 +311,12 @@ public class ArcadeApp extends Application {
         //set level as 1
         //obstacles move in a repetitive motion
         //grid pane
-        //if level one use level one speed 
+        //if level one use level one speed
     }
 
     private EventHandler<? super KeyEvent> createKeyHandlerFrog() {
 	return event -> {
-	   
+
 	    if (event.getCode() == KeyCode.LEFT)
         {
             //frogLeft();
@@ -414,11 +379,11 @@ public class ArcadeApp extends Application {
     public void levelUp(){
         //increase speed variable
         //change level graphic
-        
+
         }
     public void replace(){
-       
+
 
     }
-   
+
 } // ArcadeApp
