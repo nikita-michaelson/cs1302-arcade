@@ -51,6 +51,7 @@ public class ArcadeApp extends Application {
     Scene twenty;
     GridPane grid;
     boolean whichGame = false;//when false, its 2048 , when true its, frogger
+    int[][] cell;
     //frogger instance variables
 
 
@@ -71,6 +72,7 @@ public class ArcadeApp extends Application {
         Button tf8 = new Button("2048");
         EventHandler<ActionEvent> tf = event -> {
             Stage twentyStage = new Stage();
+            setTF8();
             twentyStage.setScene(twenty);
             twentyStage.initModality(Modality.WINDOW_MODAL);
             twentyStage.initOwner(stage);
@@ -115,7 +117,8 @@ public class ArcadeApp extends Application {
         //twenty.add(hbox);
     }
     public void startTF(){
-        //random on these
+        cell = new int[4][4];
+//random on these
         int row= 0;
         int col = 0;
         for(int i = 0; i < 4; i++){
@@ -137,38 +140,120 @@ public class ArcadeApp extends Application {
         //random 2 or 4 (weigtheted towards 2)
         //add image to col
     }
-    public void checkMatch(){
-        //Check if gridpane = gridpane +1
-        //Check others if gridbane + 1 = blank
-    }
-    public void combine(){
-        //checkMatch
-        //place as next image in array list in place
-        //addSum
-    }
+   
     public void addSum(){
         //switch over string for image
         // switch(){}
     }
-    public void moveLeft(){
-        //check column 3 to 0 for all rows
-        //checkMatch
-        //move left
-    }
-    public void moveRight(){
-        //check column 0 to 3 for all rows
-        //checkMatch
-        //move right
-    }
-    public void moveUp(){
-        //check row 0 to 3 for all cols
-        //checkMatch
-        //move up
-    }
-    public void moveDown(){
-        //check cow 3 to 0 for all cols
-        //checkMatch
-        //move down
-    }
 
+
+  public void moveRowRight(){
+    for(int i = 0; i < 4; i++){
+      moveRight(i,3);
+    }
+  }
+  public void moveRowLeft(){
+    for(int i = 0; i < 4; i++){
+      moveLeft(i,0);
+    }
+  }
+  public void moveColDown(){
+    for(int i = 0; i < 4; i++){
+      moveDown(3,i);
+    }
+  }
+  public void moveColUp(){
+    for(int i = 0; i < 4; i++){
+      moveUp(0,i);
+    }
+  }
+  public void moveRight(int i, int j){
+
+    if(cell[i][j] == 0){
+    for(int w = j; w >= 0 ; w--)
+    {
+      if(cell[i][w] != 0){
+        cell[i][j] = cell[i][w];
+        cell[i][w] = 0;
+        break;
+      }
+    }
+  }
+  if(j < 3 && cell[i][j] == cell[i][j+1]){
+    combineRight(i,j);
+  }
+    if(j >0){
+      moveRight(i,j-1);
+    }
+  }
+  public void moveDown(int i , int j){
+    if(cell[i][j] == 0){
+    for(int w = i; w >= 0 ; w--)
+    {
+      if(cell[w][j] != 0){
+        cell[i][j] = cell[w][j];
+        cell[w][j] = 0;
+        break;
+      }
+    }
+  }
+  if(i < 3 && cell[i][j] == cell[i+1][j]){
+    combineDown(i,j);
+  }
+    if(i > 0){
+      moveDown(i-1,j);
+    }
+  }
+  public void moveLeft(int i, int j){
+    if(cell[i][j] == 0){
+    for(int w = j; w <= 3 ; w++)
+    {
+      if(cell[i][w] != 0){
+        cell[i][j] = cell[i][w];
+        cell[i][w] = 0;
+        break;
+      }
+    }
+  }
+  if(j > 0 && cell[i][j] == cell[i][j-1]){
+    combineLeft(i,j);
+  }
+    if(j < 3){
+      moveLeft(i,j+1);
+    }
+  }
+  public void moveUp(int i, int j){
+    if(cell[i][j] == 0){
+    for(int w = i; w <= 3 ; w++)
+    {
+      if(cell[w][j] != 0){
+        cell[i][j] = cell[w][j];
+        cell[w][j] = 0;
+        break;
+      }
+    }
+  }
+  if(i > 0 && cell[i][j] == cell[i-1][j]){
+    combineUp(i,j);
+  }
+    if(i < 3){
+      moveUp(i+1,j);
+    }
+  }
+  public void combineRight(int i, int j){
+    cell[i][j+1] = (cell[i][j]  + cell[i][j+1]);
+    cell[i][j] = 0;
+  }
+  public void combineDown(int i, int j){
+    cell[i][j] = (cell[i][j]  + cell[i+1][j]);
+    cell[i+1][j] = 0;
+  }
+  public void combineLeft(int i, int j){
+    cell[i][j-1] = (cell[i][j]  + cell[i][j-1]);
+    cell[i][j] = 0;
+  }
+  public void combineUp(int i, int j){
+    cell[i][j] = (cell[i][j]  + cell[i-1][j]);
+    cell[i-1][j] = 0;
+  }
 } // ArcadeApp
