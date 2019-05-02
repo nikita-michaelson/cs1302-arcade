@@ -38,7 +38,7 @@ public class ArcadeFrog extends Application{
     int enemySpeed;
     Image gridImage = new Image("frogger/introGrid.png");
     ImageView introGrid = new ImageView(gridImage);
-
+    
     //~~~~~~~
     Image frogPic = new Image("frogger/frog.png");
     ImageView frog = new ImageView(frogPic);
@@ -181,7 +181,7 @@ public class ArcadeFrog extends Application{
         frogGrid.add(road4,1,0);
         frogGrid.add(road5,1,1);
         frogGrid.add(log2,1,2);
-       frogGrid.add(greenCar,1,3);
+        frogGrid.add(greenCar,1,3);
         frogGrid.add(water2,1,4);
         frogGrid.add(road6,1,5);
         frogGrid.add(yellowCar,2,0);
@@ -250,7 +250,7 @@ public class ArcadeFrog extends Application{
                 alert.showAndWait();
                 frogStage.close();
                 }
-
+                
                 frogX-=1;
                 updateFrog();
                 //frogLeft();
@@ -289,7 +289,7 @@ public class ArcadeFrog extends Application{
         if(event.getCode() == KeyCode.DOWN){
             if(frog.getY()==5)
             {
-              Alert alert = new Alert(AlertType.INFORMATION);
+                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("OUT OF BOUNDS");
                 alert.setHEaderText("YOU WENT OUT OF BOUNDS");
                 alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
@@ -298,8 +298,8 @@ public class ArcadeFrog extends Application{
             }
             frogY+=1;
             updateFrog();
-              //frogDown();
-              //updateScore();
+            //frogDown();
+            //updateScore();
             
         }
         };
@@ -311,61 +311,61 @@ public class ArcadeFrog extends Application{
     }
     
       public boolean moveCheckLeft(double x, double y){
-      if(getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water ||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water2||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water3||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water4||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water5)
-      {
+          if(getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water ||
+             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water2||
+             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water3||
+             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water4||
+             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water5)
+          {
        return false;
-      }else
-      {
+          }else
+          {
         return true;
-      }
+          }
       }
   
- 
-      public boolean moveCheckRight(){
-      if(getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water ||
-      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water2||
-      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water3||
-      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water4||
-      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water5){
+    
+    public boolean moveCheckRight(){
+        if(getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water ||
+           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water2||
+           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water3||
+           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water4||
+           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water5){
         return false;
-      }else
-      {
-        return true;
+        }else
+        {
+            return true;
+        }
       }
-      }
-
-
-      public boolean moveCheckUp(){
+    
+    
+    public boolean moveCheckUp(){
       if(getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water ||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water2||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water3||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water4||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water5)
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water2||
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water3||
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water4||
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water5)
       {
-       return false;
+          return false;
       }else
       {
-        return true;
+          return true;
       }
-      }
-      public boolean moveCheckDown(){
+    }
+    public boolean moveCheckDown(){
       if(getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water ||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water2||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water3||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water4||
-      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water5)
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water2||
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water3||
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water4||
+         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water5)
       {
-       return false;
+          return false;
       }else
       {
-        return true;
+          return true;
       }
-      }
-      }
+    }
+    
     
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {
@@ -375,7 +375,7 @@ public class ArcadeFrog extends Application{
         }
         return null;
     }
- 
+    
     public void enemyLeft(){
         //enemy check will be if coordinate it is going to contains frog then frog lost
         //check column 3 to 0 for all rows
@@ -385,11 +385,11 @@ public class ArcadeFrog extends Application{
     public void enemyRight(){
         //check column 0 to 3 for all rows
         //checkMatch
-          //move right
+        //move right
     }
     public void levelUp(){
         //increase speed variable
-          //change level graphic
+        //change level graphic
         
     }
     public void replace(){
