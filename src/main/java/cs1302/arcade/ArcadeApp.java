@@ -88,7 +88,7 @@ public class ArcadeApp extends Application {
             frogStage.setScene(frogger.initScene());
             frogStage.initModality(Modality.WINDOW_MODAL);
             frogStage.initOwner(stage);
-            frogger.createKeyHandlerFrog();
+            
             frogStage.sizeToScene();
             frogStage.show();
 
