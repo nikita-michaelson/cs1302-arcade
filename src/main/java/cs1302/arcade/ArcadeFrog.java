@@ -23,7 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
-  import javafx.scene.control.Label;
+import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.scene.paint.Color;
 import javafx.scene.Node;
@@ -36,12 +36,15 @@ public class ArcadeFrog extends Application{
     GridPane frogGrid;
     int frogLevel;
     int enemySpeed;
+    Image gridImage = new Image("frogger/introGrid.png");
+    ImageView introGrid = new ImageView(gridImage);
+
     //~~~~~~~
     Image frogPic = new Image("frogger/frog.png");
     ImageView frog = new ImageView(frogPic);
     Sprite frogSprite = new Sprite(frog,frogPic);
     //~~~~~~~~~
-    Image logPic = new Image("frogger/log.png");
+    Image logPic = new Image("frogger/transparent.png");
     ImageView log = new ImageView(logPic);
     ImageView log2 = new ImageView(logPic);
     ImageView log3 = new ImageView(logPic);
@@ -59,13 +62,13 @@ public class ArcadeFrog extends Application{
     ImageView greenCar1 = new ImageView(greenCarPic);
     Sprite greenCar1Sprite = new Sprite(greenCar1,greenCarPic);
     //~~~~~~~~~~~~~~~~
-    Image waterPic = new Image("frogger/water.png");
+    Image waterPic = new Image("frogger/transparent.png");
     ImageView water = new ImageView(waterPic);
     ImageView water2 = new ImageView(waterPic);
     ImageView water3 = new ImageView(waterPic);
     ImageView water4 = new ImageView(waterPic);
     ImageView water5 = new ImageView(waterPic);
-    Image roadPic = new Image("frogger/road.png");
+    Image roadPic = new Image("frogger/transparent.png");
     ImageView road = new ImageView(roadPic);
     ImageView road2 = new ImageView(roadPic);
     ImageView road3 = new ImageView(roadPic);
@@ -114,7 +117,7 @@ public class ArcadeFrog extends Application{
         points = new Text(pointsString);
         info.getChildren().addAll(score,points,frogInstructions);
         this.initialiseFrogGrid();
-        frogVbox.getChildren().addAll(info,frogGrid);
+        frogVbox.getChildren().addAll(info,frogStack);
         score.setFill(Color.WHITE);
         frogInstructions.setFill(Color.WHITE);
         frogVbox.setStyle("-fx-background-color : black;");
@@ -164,7 +167,9 @@ public class ArcadeFrog extends Application{
      */
     public void initialiseFrogGrid(){
         frogStack = new StackPane();
-        frogStack.getChildren().add(gridImage);
+        frogStack.getChildren().add(introGrid);
+        introGrid.setFitWidth(500);
+        introGrid.setFitHeight(575);
         frogGrid = new GridPane();
         this.imageFormatting();
         frogGrid.add(road,0,0);
@@ -176,7 +181,7 @@ public class ArcadeFrog extends Application{
         frogGrid.add(road4,1,0);
         frogGrid.add(road5,1,1);
         frogGrid.add(log2,1,2);
-        frogGrid.add(greenCar,1,3);
+       frogGrid.add(greenCar,1,3);
         frogGrid.add(water2,1,4);
         frogGrid.add(road6,1,5);
         frogGrid.add(yellowCar,2,0);
@@ -184,7 +189,10 @@ public class ArcadeFrog extends Application{
         frogGrid.add(water3,2,2);
         frogGrid.add(road8,2,3);
         frogGrid.add(log3,2,4);
-        //frogGrid.add(frog,2,5);
+        
+        frogGrid.add(frogSprite.getImage(),2,5);
+        //frogSprite.setPosition(2.0,5.0);
+        
         frogGrid.add(road9,3,0);
         frogGrid.add(greenCar1,3,1);
         frogGrid.add(water4,3,2);
@@ -197,6 +205,8 @@ public class ArcadeFrog extends Application{
         frogGrid.add(road14,4,3);
         frogGrid.add(water5,4,4);
         frogGrid.add(road15,4,5);
+        
+        frogStack.getChildren().add(frogGrid);
         System.out.println("Frog Grid init works");
         /*      });
                 };
@@ -231,19 +241,30 @@ public class ArcadeFrog extends Application{
             
             if (event.getCode() == KeyCode.LEFT)
             {
-                if(frog.getX()==0)
-            {
-                //throw alert you cant go out of bounds
-            }
+                if(frogSprite.getX()==0)
+                {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("OUT OF BOUNDS");
+                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
+                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
+                alert.showAndWait();
+                frogStage.close();
+                }
+
                 frogX-=1;
-                frogLeft();
+                updateFrog();
                 //frogLeft();
                 //updateScore();
             }
         if (event.getCode() == KeyCode.RIGHT){
             if(frog.getX()==5)
             {
-                //throw alert you cant go out of bounds
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("OUT OF BOUNDS");
+                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
+                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
+                alert.showAndWait();
+                frogStage.close();
             }
             frogX+=1;
             updateFrog();
@@ -253,7 +274,12 @@ public class ArcadeFrog extends Application{
         if (event.getCode() == KeyCode.UP){
             if(frog.getY()==0)
             {
-                //throw alert you cant go out of bounds
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("OUT OF BOUNDS");
+                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
+                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
+                alert.showAndWait();
+                frogStage.close();
             }
             frogY-=1;
             updateFrog();
@@ -263,7 +289,12 @@ public class ArcadeFrog extends Application{
         if(event.getCode() == KeyCode.DOWN){
             if(frog.getY()==5)
             {
-              //throw alert you cant go out of bounds
+              Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("OUT OF BOUNDS");
+                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
+                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
+                alert.showAndWait();
+                frogStage.close();
             }
             frogY+=1;
             updateFrog();
@@ -278,29 +309,64 @@ public class ArcadeFrog extends Application{
         frog.setX(frogX);
         frog.setY(frogY);
     }
-    /*
+    
       public boolean moveCheckLeft(double x, double y){
-      if(getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y) == log ||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y) == log2||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y) == log3||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y) == log4||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y) == log5||
-      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y) == log5||)))))))
-      //if equal to stuff it shouldnt be then return false
-      {}
+      if(getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water ||
+      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water2||
+      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water3||
+      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water4||
+      getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water5)
+      {
+       return false;
+      }else
+      {
+        return true;
       }
-    */
-    /*
+      }
+  
+ 
       public boolean moveCheckRight(){
-      
+      if(getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water ||
+      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water2||
+      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water3||
+      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water4||
+      getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water5){
+        return false;
+      }else
+      {
+        return true;
       }
+      }
+
+
       public boolean moveCheckUp(){
-      
+      if(getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water ||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water2||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water3||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water4||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water5)
+      {
+       return false;
+      }else
+      {
+        return true;
+      }
       }
       public boolean moveCheckDown(){
-      
+      if(getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water ||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water2||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water3||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water4||
+      getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water5)
+      {
+       return false;
+      }else
+      {
+        return true;
       }
-    */
+      }
+      }
+    
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
@@ -309,33 +375,7 @@ public class ArcadeFrog extends Application{
         }
         return null;
     }
-    /** Method that moves frog to the left.*/
-    public void frogLeft(){
-        //check if valid move if  valid set and update Score , if not set and throw up death dialogue box
-        frog.setX(frogX);
-        frog.setY(frogY);
-        //check column 3 to 0 for all rows
-        //checkMatch
-        //move left
-    }
-/** Method that moves frog to the right.*/
-    public void frogRight(){
-        //check column 0 to 3 for all rows
-        //checkMatch
-        //move right
-    }
-/** Method that moves frog upwards.*/
-    public void frogUp(){
-        //check row 0 to 3 for all cols
-        //checkMatch
-        //move up
-    }
-/** Method that moves frog downward. */
-    public void frogDown(){
-        //check cow 3 to 0 for all cols
-        //checkMatch
-        //move down
-    }
+ 
     public void enemyLeft(){
         //enemy check will be if coordinate it is going to contains frog then frog lost
         //check column 3 to 0 for all rows

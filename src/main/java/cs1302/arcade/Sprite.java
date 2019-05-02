@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.canvas.*;
-
-public class Sprite {
+import javafx.scene.layout.Region;
+public class Sprite extends Region{
 
     private Image image;
     private ImageView imageView;
@@ -14,7 +14,7 @@ public class Sprite {
     private double positionY;
     private double width;
     private double height;
-    final Canvas canvas = new Canvas(250,250);
+    final Canvas canvas = new Canvas(500,500);
     GraphicsContext gc = canvas.getGraphicsContext2D();
     public Sprite(ImageView imageView,Image image) {
         this.image = image;
@@ -24,12 +24,17 @@ public class Sprite {
         positionX = 0;
         positionY = 0;
     }
-
+    public ImageView getImage()
+    {
+        return imageView;
+    }
     public void setPosition(double x, double y) {
         positionX = x;
         positionY = y;
+        gc.drawImage(this.image,positionX,positionY);
     }
 
+  
     public double getX(){
         return positionX;
     }
@@ -37,6 +42,7 @@ public class Sprite {
     public double getY(){
         return positionY;
     }
+    
     public void render(GraphicsContext gc) {
         gc.drawImage(image, positionX, positionY);
     }
