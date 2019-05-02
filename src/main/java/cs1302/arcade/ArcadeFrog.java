@@ -27,6 +27,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.scene.paint.Color;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 /** Class ArcadeFrog represents all the actions and attribute needed to create a 
  * Frogger Game.
  */
@@ -93,8 +95,8 @@ public class ArcadeFrog extends Application{
     Text score;
     Text points;
     Text frogInstructions;
-    double frogX = 2;
-    double frogY = 5;
+    int frogX = 2;
+    int frogY = 5;
     
     public void start(Stage stage) {
         
@@ -122,6 +124,15 @@ public class ArcadeFrog extends Application{
         frogInstructions.setFill(Color.WHITE);
         frogVbox.setStyle("-fx-background-color : black;");
         leapfrog = new Scene(frogVbox);
+        leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+      if(key.getCode()==KeyCode.ENTER) {
+          frogGrid.add(frogSprite.getImage(),3,5);
+      }
+});
+        createFrogLeftHandler();
+        createFrogRightHandler();
+        createFrogUpHandler();
+        createFrogDownHandler();
         return leapfrog;
     }
     
@@ -190,8 +201,8 @@ public class ArcadeFrog extends Application{
         frogGrid.add(road8,2,3);
         frogGrid.add(log3,2,4);
         
-        frogGrid.add(frogSprite.getImage(),2,5);
-        //frogSprite.setPosition(2.0,5.0);
+        frogGrid.add(frog,2,5);
+        frogSprite.setPosition(2.0,5.0);
         
         frogGrid.add(road9,3,0);
         frogGrid.add(greenCar1,3,1);
@@ -236,86 +247,103 @@ public class ArcadeFrog extends Application{
     /** Method to handle threading of obstacles and start movement.*/
     public void startFrog(){
     }
-    public EventHandler<? super KeyEvent> createKeyHandlerFrog() {
-        return event -> {
-            
-            if (event.getCode() == KeyCode.LEFT)
-            {
-                if(frogSprite.getX()==0)
+
+    public void createFrogLeftHandler() {
+        
+            leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+             if (key.getCode() == KeyCode.LEFT)
                 {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("OUT OF BOUNDS");
-                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
-                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
-                alert.showAndWait();
-                frogStage.close();
-                }
+                    
                 
                 frogX-=1;
                 updateFrog();
                 //frogLeft();
                 //updateScore();
+                }
             }
-        if (event.getCode() == KeyCode.RIGHT){
-            if(frog.getX()==5)
-            {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("OUT OF BOUNDS");
-                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
-                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
-                alert.showAndWait();
-                frogStage.close();
+        );
+    }
+
+        public void createFrogRightHandler() {
+        
+        leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.RIGHT)
+                {
+                    
+                frogX+=1;
+                updateFrog();
+                //frogRight();
+                //updateScore();
+                }
             }
-            frogX+=1;
-            updateFrog();
-            //frogRight();
-            //updateScore();
+        );
+    }
+
+        public void createFrogUpHandler() {
+        
+        leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.UP){
+                
+                frogY-=1;
+                updateFrog();
+                //frogUp();
+                //updateScore();
+            }
         }
-        if (event.getCode() == KeyCode.UP){
-            if(frog.getY()==0)
-            {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("OUT OF BOUNDS");
-                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
-                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
-                alert.showAndWait();
-                frogStage.close();
-            }
-            frogY-=1;
-            updateFrog();
-            //frogUp();
-            //updateScore();
-        }
-        if(event.getCode() == KeyCode.DOWN){
-            if(frog.getY()==5)
-            {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("OUT OF BOUNDS");
-                alert.setHEaderText("YOU WENT OUT OF BOUNDS");
-                alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
-                alert.showAndWait();
-                frogStage.close();
-            }
-            frogY+=1;
-            updateFrog();
-            //frogDown();
-            //updateScore();
+        );
+    }
+
+        public void createFrogDownHandler() {
+       
+        leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode() == KeyCode.DOWN){
+                if(frog.getY()==5)
+                {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("OUT OF BOUNDS");
+                    alert.setHeaderText("YOU WENT OUT OF BOUNDS");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" ponits !");
+                    alert.showAndWait();
+                    //frogStage.close();
+                }
+                frogY+=1;
+                updateFrog();
+               
+                //frogDown();
+                //updateScore();
             
+            }
         }
-        };
-    } // createKeyHandler
+        );
+    }// createKeyHandler
     public void updateFrog(){
         //check if valid move if  valid set and update Score , if not set and throw up death dialogue box
-        frog.setX(frogX);
-        frog.setY(frogY);
+       double x = frogX * 1.0;
+       double y = frogY *1.0;
+       if(moveCheckDown(x,y))
+       {
+        frogGrid.add(frogSprite.getImage(),frogX,frogY);
+        }
+        else
+        {
+            frogGrid.add(frogSprite.getImage(),frogX,frogY);
+            Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("OUT OF BOUNDS");
+                    alert.setHeaderText("YOU WENT OUT OF BOUNDS");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.showAndWait();
+
+        }
     }
     
       public boolean moveCheckLeft(double x, double y){
-          if(getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water ||
-             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water2||
-             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water3||
-             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water4||
-             getNodeFromGridPane(frogGrid,(int)(x-1),(int)(y)) == water5)
+        double xx = x;
+        double yy = y;
+          if(getNodeFromGridPane(frogGrid,(int)(xx-1),(int)(yy)) == water ||
+             getNodeFromGridPane(frogGrid,(int)(xx-1),(int)(yy)) == water2||
+             getNodeFromGridPane(frogGrid,(int)(xx-1),(int)(yy)) == water3||
+             getNodeFromGridPane(frogGrid,(int)(xx-1),(int)(yy)) == water4||
+             getNodeFromGridPane(frogGrid,(int)(xx-1),(int)(yy)) == water5)
           {
        return false;
           }else
@@ -325,12 +353,14 @@ public class ArcadeFrog extends Application{
       }
   
     
-    public boolean moveCheckRight(){
-        if(getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water ||
-           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water2||
-           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water3||
-           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water4||
-           getNodeFromGridPane(frogGrid,(int)(x+1),(int)(y)) == water5){
+    public boolean moveCheckRight(double x, double y){
+        double xx = x;
+        double yy = y;
+        if(getNodeFromGridPane(frogGrid,(int)(xx+1),(int)(y)) == water ||
+           getNodeFromGridPane(frogGrid,(int)(xx+1),(int)(y)) == water2||
+           getNodeFromGridPane(frogGrid,(int)(xx+1),(int)(y)) == water3||
+           getNodeFromGridPane(frogGrid,(int)(xx+1),(int)(y)) == water4||
+           getNodeFromGridPane(frogGrid,(int)(xx+1),(int)(y)) == water5){
         return false;
         }else
         {
@@ -339,12 +369,14 @@ public class ArcadeFrog extends Application{
       }
     
     
-    public boolean moveCheckUp(){
-      if(getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water ||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water2||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water3||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water4||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y-1)) == water5)
+    public boolean moveCheckUp(double x, double y){
+        double xx = x;
+        double yy = y;
+      if(getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy-1)) == water ||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy-1)) == water2||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy-1)) == water3||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy-1)) == water4||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy-1)) == water5)
       {
           return false;
       }else
@@ -352,12 +384,14 @@ public class ArcadeFrog extends Application{
           return true;
       }
     }
-    public boolean moveCheckDown(){
-      if(getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water ||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water2||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water3||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water4||
-         getNodeFromGridPane(frogGrid,(int)(x),(int)(y+1)) == water5)
+    public boolean moveCheckDown(double x, double y){
+        double xx = x;
+        double yy = y;
+      if(getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy+1)) == water ||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy+1)) == water2||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy+1)) == water3||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy+1)) == water4||
+         getNodeFromGridPane(frogGrid,(int)(xx),(int)(yy+1)) == water5)
       {
           return false;
       }else
