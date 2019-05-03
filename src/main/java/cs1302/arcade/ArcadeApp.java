@@ -66,10 +66,14 @@ public class ArcadeApp extends Application {
          * (rectangle) in a group.
          */
 
-        VBox vbox = new VBox();
+        HBox hbox = new HBox();
         Text t = new Text ("Pick a Game");
-        Button frogButton = new Button("Frogger");
-        Button tf8 = new Button("2048");
+        Button frogButton = new Button();
+        Image frogImage = new Image("frogger/froggerLogo.png",400,400,false,false);
+        frogButton.setGraphic(new ImageView(frogImage));
+        Button tf8 = new Button();
+        Image twentyImage = new Image("frogger/2048logo.png",400,400,false,false);
+        tf8.setGraphic(new ImageView(twentyImage));
         EventHandler<ActionEvent> tf = event -> {
             Stage twentyStage = new Stage();
             setTF8();
@@ -94,10 +98,10 @@ public class ArcadeApp extends Application {
 
         };
         frogButton.setOnAction(frogButtonAction);
-        // vbox.setStyle("-fx-background-image :url("frogger/introImage.png")");
-        vbox.getChildren().addAll(introView,t,frogButton,tf8);
-        Scene scene = new Scene(vbox);
-        stage.setTitle("cs1302-arcade!");
+        //hbox.setStyle("-fx-background-color :black;");
+        hbox.getChildren().addAll(frogButton,tf8);
+        Scene scene = new Scene(hbox);
+        stage.setTitle("Welcome to our arcade !!!");
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
