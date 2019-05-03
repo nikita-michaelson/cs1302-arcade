@@ -53,7 +53,8 @@ public class ArcadeApp extends Application {
     boolean whichGame = false;//when false, its 2048 , when true its, frogger
     int[][] cell;
     //frogger instance variables
-
+    Stage frogStage; 
+    Stage stage;
 
 
     /** {@inheritdoc} */
@@ -88,11 +89,10 @@ public class ArcadeApp extends Application {
 
         EventHandler<ActionEvent> frogButtonAction = event -> {
             ArcadeFrog frogger = new ArcadeFrog();
-            Stage frogStage = new Stage();
+            frogStage = new Stage();
             frogStage.setScene(frogger.initScene());
             frogStage.initModality(Modality.WINDOW_MODAL);
             frogStage.initOwner(stage);
-            
             frogStage.sizeToScene();
             frogStage.show();
 

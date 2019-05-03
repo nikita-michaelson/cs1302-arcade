@@ -10,8 +10,8 @@ public class Sprite extends Region{
 
     private Image image;
     private ImageView imageView;
-    private double positionX;
-    private double positionY;
+    private int positionX ;
+    private int positionY ;
     private double width;
     private double height;
     final Canvas canvas = new Canvas(500,500);
@@ -28,27 +28,27 @@ public class Sprite extends Region{
     {
         return imageView;
     }
-    public void setPosition(double x, double y) {
+    public void setPosition(int x, int y) {
         positionX = x;
         positionY = y;
-        gc.drawImage(this.image,positionX,positionY);
+        //gc.drawImage(this.image,positionX,positionY);
     }
 
   
-    public double getX(){
+    public int getX(){
         return positionX;
     }
 
-    public double getY(){
+    public int getY(){
         return positionY;
     }
     
     public void render(GraphicsContext gc) {
-        gc.drawImage(image, positionX, positionY);
+        gc.drawImage(image, positionX*1.0, positionY*1.0);
     }
 
     public Rectangle2D getBoundary() {
-        return new Rectangle2D(positionX, positionY, width, height);
+        return new Rectangle2D(positionX*1.0, positionY*1.0, width, height);
     }
 
     public boolean intersects(Sprite spr) {
