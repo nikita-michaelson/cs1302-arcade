@@ -35,6 +35,8 @@ import javafx.scene.control.Alert.AlertType;
 /** Class ArcadeFrog represents all the actions and attribute needed to create a 
  * Frogger Game.
  */
+
+//level update, exiting singular stage, pushing score to gui, (thread/timeline issues) doesnt work
 public class ArcadeFrog extends Application{
    
     Scene leapfrog;
@@ -42,7 +44,7 @@ public class ArcadeFrog extends Application{
     GridPane frogGrid;
     GridPane enemyGrid;
     int frogLevel = 1;
-    double enemySpeed = 2.5;
+    double enemySpeed = 1.5;
     Image gridImage = new Image("frogger/introGrid.png");
     ImageView introGrid = new ImageView(gridImage);
     
@@ -76,7 +78,8 @@ public class ArcadeFrog extends Application{
     ImageView water4 = new ImageView(waterPic);
     ImageView water5 = new ImageView(waterPic);
     Image roadPic = new Image("frogger/transparent.png");
-    ImageView road = new ImageView(roadPic);
+    Image finish = new Image("frogger/finish.png");
+    ImageView road = new ImageView(finish);
     ImageView road2 = new ImageView(roadPic);
     ImageView road3 = new ImageView(roadPic);
     ImageView road4 = new ImageView(roadPic);
@@ -98,12 +101,14 @@ public class ArcadeFrog extends Application{
     VBox frogVbox;
     HBox info;
     Text score;
-    Text points;
+    Text points = new Text(pointsString);
     Text frogInstructions;
     Timeline gctime = new Timeline();
     Timeline gc1time = new Timeline();
     Timeline yctime = new Timeline();
-    boolean timelineStatus = true;
+    boolean yright = true;
+    boolean gcright = true;
+    boolean gc1right = true;
     int frogX = 2;
     int frogY = 5;
     int gcX = 1;
@@ -126,11 +131,11 @@ public class ArcadeFrog extends Application{
         frogVbox = new VBox();
         info = new HBox();
         score = new Text("Score :");
-        frogInstructions = new Text("Use arrow keys to move.Good Luck Froggy!\n"+
+        frogInstructions = new Text("Use arrow keys to move.Get to the lily pad!\n"+
+                                    "Good Luck Froggy!\n"+
                                     "10 points per move in level 1.\n"+
                                     "15 points per move in level 2.\n"+
                                     "25 points per move in level 3.");
-        points = new Text(pointsString);
         info.getChildren().addAll(score,points,frogInstructions);
         this.initialiseFrogGrid();
         frogVbox.getChildren().addAll(info,frogStack);
@@ -294,17 +299,14 @@ public class ArcadeFrog extends Application{
             }else if(frogLevel == 2)
             {
             pointsInt+=15;
-            pointsString = this.scoreConvert(pointsInt);
+            points.setText(Integer.toString(pointsInt));
             }else if(frogLevel == 3)
             {
             pointsInt+=15;
-            pointsString = this.scoreConvert(pointsInt);
+            points.setText(Integer.toString(pointsInt));
             }
         }
-    public String scoreConvert(int pointsInt){
-        String pointsString = Integer.toString(pointsInt);
-        return pointsString;
-    }
+    
     /** Method to update difficulty of game */
     public void updateLevel()
         {
@@ -313,7 +315,7 @@ public class ArcadeFrog extends Application{
                 frogStack.getChildren().remove(frogGrid);
                 this.initialiseFrogGrid();
                 frogLevel = 2;
-                enemySpeed = 2;
+                enemySpeed = 3;
                 //update car speed
 
             }else if(frogLevel == 2)
@@ -321,15 +323,12 @@ public class ArcadeFrog extends Application{
                 frogStack.getChildren().remove(frogGrid);
                 this.initialiseFrogGrid();
                 frogLevel = 3;
-                enemySpeed = 1; 
+                enemySpeed = 2; 
             }else if (frogLevel == 3)
             {
                 //winning dialogue box
             }
         }
-    /** Method to handle threading of obstacles and start movement.*/
-    public void startFrog(){
-    }
 
     public void createFrogLeftHandler() {
         
@@ -348,6 +347,7 @@ public class ArcadeFrog extends Application{
                     app.frogStage.close();
                     app.stage.show();
                 }
+                
                 frogX-=1;
                 frogSprite.setPosition(frogX,frogY);
                 left();
@@ -372,6 +372,7 @@ public class ArcadeFrog extends Application{
                     alert.showAndWait();
                     
                 } 
+                
                 frogX+=1;
                 frogSprite.setPosition(frogX,frogY);
                 right();
@@ -395,6 +396,7 @@ public class ArcadeFrog extends Application{
                     alert.showAndWait();
                     
                 }
+               
                 frogY-=1;
                 frogSprite.setPosition(frogX,frogY);
                 up();
@@ -420,6 +422,7 @@ public class ArcadeFrog extends Application{
 
                     
                 }
+                
                 frogY+=1;
                 frogSprite.setPosition(frogX,frogY);
                 down();
@@ -439,6 +442,10 @@ public class ArcadeFrog extends Application{
        {
         this.removeNodeFromGridPane(frogSprite.getImage());
         frogGrid.add(frogSprite.getImage(),frogX,frogY);
+        if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        {
+            updateLevel();
+        }
 
         }
         else
@@ -451,8 +458,9 @@ public class ArcadeFrog extends Application{
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
                     alert.showAndWait();
                     Platform.exit();
-
         }
+
+
     }
     public void right(){
         //check if valid move if  valid set and update Score , if not set and throw up death dialogue box
@@ -462,6 +470,11 @@ public class ArcadeFrog extends Application{
        {
         this.removeNodeFromGridPane(frogSprite.getImage());
         frogGrid.add(frogSprite.getImage(),frogX,frogY);
+         if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        {
+            updateLevel();
+        }
+        
         }
         else
         {
@@ -484,6 +497,11 @@ public class ArcadeFrog extends Application{
        {
         this.removeNodeFromGridPane(frogSprite.getImage());
         frogGrid.add(frogSprite.getImage(),frogX,frogY);
+         if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        {
+            updateLevel();
+        }
+        
         }
         else
         {
@@ -506,6 +524,11 @@ public class ArcadeFrog extends Application{
        {
         this.removeNodeFromGridPane(frogSprite.getImage());
         frogGrid.add(frogSprite.getImage(),frogX,frogY);
+         if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        {
+            updateLevel();
+        }
+        
         }
         else
         {
@@ -576,8 +599,11 @@ public class ArcadeFrog extends Application{
         KeyFrame gckey = new KeyFrame(Duration.seconds(enemySpeed),greenMove);
         EventHandler<ActionEvent> green1Move = event -> gc1Move();
         KeyFrame gc1key = new KeyFrame(Duration.seconds(enemySpeed),green1Move);
-        EventHandler<ActionEvent> yellowMove = event -> gcMove();
+        EventHandler<ActionEvent> yellowMove = event -> ycMove();
         KeyFrame yckey = new KeyFrame(Duration.seconds(enemySpeed),yellowMove);
+        gctime.setCycleCount(Timeline.INDEFINITE);
+        gc1time.setCycleCount(Timeline.INDEFINITE);
+        yctime.setCycleCount(Timeline.INDEFINITE);
         gctime.getKeyFrames().add(gckey);
         gc1time.getKeyFrames().add(gc1key);
         yctime.getKeyFrames().add(yckey);
@@ -589,85 +615,202 @@ public class ArcadeFrog extends Application{
     
     
     public void gcMove(){
-
-            if(greenCarSprite.getX()!=0)
+    if(greenCarSprite.getX()<4&&(gcright == true || greenCarSprite.getX()==0))
             {
-            gcLeft();
-            }else{
+
             gcRight();
+            }else {
+               
+            if(greenCarSprite.getX()==4||greenCarSprite.getX()>0)
+            gcLeft();
+        
             }
+            
 
         }
     
     public void gcLeft(){
         //change 
-        gcX-=1;
         //set p
+        gcX-=1;
+        if(gcX==0)
+        {
+            gcright = true;
+        }
         greenCarSprite.setPosition(gcX,gcY);
         this.removeNodeFromGridPane(greenCarSprite.getImage());
         frogGrid.add(greenCarSprite.getImage(),gcX,gcY);
+        if(collisionCheck())
+        {
+            Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("ROADKILL");
+                    alert.setHeaderText("YOU GOT HIT FROGGY");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.show();
+                    
+        }
 
     }
     public void gcRight(){
-       //change 
-        gcX+=1;
+       gcX+=1;
+        if(gcX==4)
+        {
+            gcright = false;
+        }
+        if(gcX==1)
+        {
+            gcright = true;
+        }
         //set p
         greenCarSprite.setPosition(gcX,gcY);
         this.removeNodeFromGridPane(greenCarSprite.getImage());
         frogGrid.add(greenCarSprite.getImage(),gcX,gcY);
+        if(collisionCheck())
+        {
+            Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("ROADKILL");
+                    alert.setHeaderText("YOU GOT HIT FROGGY");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.show();
+        }
 
     }
     public void gc1Move(){
-        if(greenCar1Sprite.getX()!=0)
+        if(greenCar1Sprite.getX()<4&&(gc1right == true || greenCar1Sprite.getX()==0))
             {
-            gc1Left();
-            }else{
+
             gc1Right();
+            //System.out.println(gc1X);
+            //System.out.println(greenCar1Sprite.getX());
+            }else {
+            if(greenCar1Sprite.getX()==4||greenCar1Sprite.getX()>0)
+    
+            gc1Left();
+            //System.out.println(gc1X);
+            //System.out.println(greenCar1Sprite.getX());
+
             }
     }
     
     public void gc1Left(){
         //change 
         gc1X-=1;
+        if(gc1X==1)
+        {
+            gc1right = true;
+        }
         //set p
         greenCarSprite.setPosition(gc1X,gc1Y);
         this.removeNodeFromGridPane(greenCar1Sprite.getImage());
-        frogGrid.add(greenCar1Sprite.getImage(),frogX,frogY);
+        frogGrid.add(greenCar1Sprite.getImage(),gc1X,gc1Y);
+        if(collisionCheck())
+        {
+            Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("ROADKILL");
+                    alert.setHeaderText("YOU GOT HIT FROGGY");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.show();
+        }
 
     }
     public void gc1Right(){
-      gc1X+=1;
+       gc1X+=1;
+        if(gc1X==4)
+        {
+            gc1right = false;
+        }
+        if(gc1X==1)
+        {
+            gc1right = true;
+        }
         //set p
         greenCarSprite.setPosition(gc1X,gc1Y);
         this.removeNodeFromGridPane(greenCar1Sprite.getImage());
-        frogGrid.add(greenCar1Sprite.getImage(),frogX,frogY);
+        frogGrid.add(greenCar1Sprite.getImage(),gc1X,gc1Y);
+        if(collisionCheck())
+        {
+            Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("ROADKILL");
+                    alert.setHeaderText("YOU GOT HIT FROGGY");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.show();
+        }
     }
      public void ycMove(){
 
-            if(yellowCarSprite.getX()!=0)
+            if(yellowCarSprite.getX()<4&&(yright == true || yellowCarSprite.getX()==0))
             {
-            ycLeft();
-            }else{
+
             ycRight();
+            }else {
+            if(yellowCarSprite.getX()==4||yellowCarSprite.getX()>0)
+    
+            ycLeft();
             }
+        
     }
     
     public void ycLeft(){
          ycX-=1;
+         
         //set p
         yellowCarSprite.setPosition(ycX,ycY);
         this.removeNodeFromGridPane(yellowCarSprite.getImage());
         frogGrid.add(yellowCarSprite.getImage(),ycX,ycY);
+        if(collisionCheck())
+        {
+            Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("ROADKILL");
+                    alert.setHeaderText("YOU GOT HIT FROGGY");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.show();
+        }
+        
     }
     public void ycRight(){
         ycX+=1;
+        if(ycX==4)
+        {
+            yright = false;
+        }
+        if(ycX==1)
+        {
+            yright = true;
+        }
         //set p
         yellowCarSprite.setPosition(ycX,ycY);
         this.removeNodeFromGridPane(yellowCarSprite.getImage());
         frogGrid.add(yellowCarSprite.getImage(),ycX,ycY);
+        if(collisionCheck())
+        {
+            Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("ROADKILL");
+                    alert.setHeaderText("YOU GOT HIT FROGGY");
+                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.show();
+        }
     }
-    public void collisionCheck(){
-        
+    public boolean collisionCheck(){
+        boolean crash = false;
+        if(frogSprite.getX()==greenCarSprite.getX() && frogSprite.getY()==greenCarSprite.getY())
+        {
+            crash = true;
+        }
+        if(frogSprite.getX()==greenCar1Sprite.getX() && frogSprite.getY()==greenCar1Sprite.getY())
+        {
+            crash = true;
+        }
+        if(frogSprite.getX()==yellowCarSprite.getX() && frogSprite.getY()==yellowCarSprite.getY())
+        {
+            crash = true;
+        }
+        return crash;
     }
     
     
