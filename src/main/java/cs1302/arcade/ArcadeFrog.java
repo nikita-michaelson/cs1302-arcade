@@ -36,7 +36,7 @@ import javafx.scene.control.Alert.AlertType;
  * Frogger Game.
  */
 
-//level update, exiting singular stage, pushing score to gui, (thread/timeline issues) doesnt work
+//level update, exiting singular stage, put level on gui after score
 public class ArcadeFrog extends Application{
    
     Scene leapfrog;
@@ -44,7 +44,7 @@ public class ArcadeFrog extends Application{
     GridPane frogGrid;
     GridPane enemyGrid;
     int frogLevel = 1;
-    double enemySpeed = 1.5;
+    double enemySpeed = 1;
     Image gridImage = new Image("frogger/introGrid.png");
     ImageView introGrid = new ImageView(gridImage);
     //~~~~~~~
@@ -100,11 +100,12 @@ public class ArcadeFrog extends Application{
     VBox frogVbox;
     HBox info;
     Text score;
-    Text points = new Text();
+    Text points = new Text("0");
     Text frogInstructions;
     Timeline gctime = new Timeline();
     Timeline gc1time = new Timeline();
     Timeline yctime = new Timeline();
+    Stage frogStage;
 
     boolean yright = true;
     boolean gcright = true;
@@ -126,6 +127,7 @@ public class ArcadeFrog extends Application{
     * variables elsewhere.
     */
     public ArcadeFrog(){
+        frogStage = new Stage();
         dead = false;
     }
     /** Method that returns initialised frogger Scene
@@ -151,6 +153,7 @@ public class ArcadeFrog extends Application{
         this.initialiseFrogGrid();
         frogVbox.getChildren().addAll(info,frogStack);
         score.setFill(Color.WHITE);
+        points.setFill(Color.WHITE);
         frogInstructions.setFill(Color.WHITE);
         frogVbox.setStyle("-fx-background-color : black;");
         leapfrog = new Scene(frogVbox);
@@ -258,8 +261,7 @@ public class ArcadeFrog extends Application{
             pointsInt+=10;
             //pointsString = this.scoreConvert(pointsInt);
              points.setText(Integer.toString(pointsInt));
-             info.getChildren().remove(points);
-             info.getChildren().add(points);
+            
             
             }else if(frogLevel == 2)
             {
@@ -277,24 +279,75 @@ public class ArcadeFrog extends Application{
         {
             if(frogLevel == 1)
             {
-                //frogStack.getChildren().remove(frogGrid);
-                this.initialiseFrogGrid();
-                this.initScene();
+                gctime.stop();
+                gc1time.stop();
+                yctime.stop();
+                this.removeNodeFromGridPane(greenCarSprite.getImage());
+                frogGrid.add(greenCarSprite.getImage(),1,3);
+                greenCarSprite.setPosition(1,3);
+                this.removeNodeFromGridPane(yellowCarSprite.getImage());
+                frogGrid.add(yellowCarSprite.getImage(),2,0);
+                 yellowCarSprite.setPosition(2,0);
+                 this.removeNodeFromGridPane(frogSprite.getImage());
+                 frogGrid.add(frogSprite.getImage(),2,5);
+                frogSprite.setPosition(2,5);
+                this.removeNodeFromGridPane(greenCar1Sprite.getImage());
+                frogGrid.add(greenCar1Sprite.getImage(),3,1);
+                greenCar1Sprite.setPosition(3,1);
                 frogLevel = 2;
-                enemySpeed = 3;
+                enemySpeed = .5;
+                frogX = 2;
+                frogY = 5;
+                gcX = 1;
+                gcY = 3;
+                gc1X = 3;
+                gc1Y = 1;
+                ycX = 2;
+               ycY = 0;
+                this.prepareEnemyTimeline();
                 //update car speed
 
             }else if(frogLevel == 2)
             {
-                //frogStack.getChildren().remove(frogGrid);
-                this.initialiseFrogGrid();
-                this.initScene();
+                gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
+                this.removeNodeFromGridPane(greenCarSprite.getImage());
+                frogGrid.add(greenCarSprite.getImage(),1,3);
+                greenCarSprite.setPosition(1,3);
+                this.removeNodeFromGridPane(yellowCarSprite.getImage());
+                frogGrid.add(yellowCarSprite.getImage(),2,0);
+                 yellowCarSprite.setPosition(2,0);
+                 this.removeNodeFromGridPane(frogSprite.getImage());
+                 frogGrid.add(frogSprite.getImage(),2,5);
+                frogSprite.setPosition(2,5);
+                this.removeNodeFromGridPane(greenCar1Sprite.getImage());
+                frogGrid.add(greenCar1Sprite.getImage(),3,1);
+                greenCar1Sprite.setPosition(3,1);
 
                 frogLevel = 3;
-                enemySpeed = 2; 
+                enemySpeed = .2; 
+                frogX = 2;
+                frogY = 5;
+                gcX = 1;
+                gcY = 3;
+                gc1X = 3;
+                gc1Y = 1;
+                ycX = 2;
+               ycY = 0;
+                this.prepareEnemyTimeline();
             }else if (frogLevel == 3)
             {
-                //winning dialogue box
+                gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("YOU WIN!!");
+                    alert.setHeaderText("CONGRATS FROGGY");
+                    alert.setContentText("You scored :"+pointsInt+" points !");
+                     alert.setOnHidden(evt -> frogStage.close());
+                   
+                    alert.showAndWait();
             }
         }
     /** Method that creates handle for left movement.*/
@@ -305,10 +358,15 @@ public class ArcadeFrog extends Application{
                 {
                     if(frogSprite.getX()==0)
                 {
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("OUT OF BOUNDS");
                     alert.setHeaderText("YOU WENT OUT OF BOUNDS");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                                        alert.setOnHidden(evt -> frogStage.close());
+
                     alert.showAndWait();
                     dead = true;
                 }
@@ -330,10 +388,15 @@ public class ArcadeFrog extends Application{
                 {
                    if(frogSprite.getX()==4)
                 {
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("OUT OF BOUNDS");
                     alert.setHeaderText("YOU WENT OUT OF BOUNDS");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                                        alert.setOnHidden(evt -> frogStage.close());
+
                     alert.showAndWait();
                     dead = true;
                 } 
@@ -354,10 +417,15 @@ public class ArcadeFrog extends Application{
             if (key.getCode() == KeyCode.UP){
                 if(frogSprite.getY()==0)
                 {
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("OUT OF BOUNDS");
                     alert.setHeaderText("YOU WENT OUT OF BOUNDS");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                                        alert.setOnHidden(evt -> frogStage.close());
+
                     alert.showAndWait();
                     dead = true;
                 }
@@ -378,10 +446,15 @@ public class ArcadeFrog extends Application{
             if(key.getCode() == KeyCode.DOWN){
                 if(frogSprite.getY()==5)
                 {
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("OUT OF BOUNDS");
                     alert.setHeaderText("YOU WENT OUT OF BOUNDS");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                     alert.setOnHidden(evt -> frogStage.close());
+                   
                     alert.showAndWait();
                     dead = true;
 
@@ -420,9 +493,13 @@ public class ArcadeFrog extends Application{
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("Oh No");
                     alert.setHeaderText("YOU WENT FOR A DIP");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> frogStage.close());
                     alert.showAndWait();
                     dead = true;
         }
@@ -449,9 +526,13 @@ public class ArcadeFrog extends Application{
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("Oh NO");
                     alert.setHeaderText("YOU WENT FOR A DIP");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                     alert.setOnHidden(evt -> frogStage.close());
                     alert.showAndWait();
                     dead = true;
 
@@ -477,9 +558,14 @@ public class ArcadeFrog extends Application{
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                    gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("Oh NO");
                     alert.setHeaderText("YOU WENT FOR A DIP");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> frogStage.close());
+ 
                     alert.showAndWait();
                     dead = true;
 
@@ -505,9 +591,14 @@ public class ArcadeFrog extends Application{
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("Oh No");
                     alert.setHeaderText("YOU WENT FOR A DIP");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+                    alert.setOnHidden(evt -> frogStage.close());
+
                     alert.showAndWait();
                     dead = true;
 
@@ -617,10 +708,13 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("ROADKILL");
                     alert.setHeaderText("YOU GOT HIT FROGGY");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    //alert.setOnHidden(evt -> frogStage.close());
+                    alert.setOnHidden(evt -> frogStage.close());
                     alert.show();
                     dead = true;
         }
@@ -644,10 +738,13 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("ROADKILL");
                     alert.setHeaderText("YOU GOT HIT FROGGY");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    //alert.setOnHidden(evt -> frogStage.close());
+                    alert.setOnHidden(evt -> frogStage.close());
                     alert.show();
                     dead = true;
         }
@@ -685,10 +782,13 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("ROADKILL");
                     alert.setHeaderText("YOU GOT HIT FROGGY");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    //alert.setOnHidden(evt -> frogStage.close());
+                    alert.setOnHidden(evt -> frogStage.close());
                     alert.show();
                     dead = true;
         }
@@ -712,10 +812,13 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("ROADKILL");
                     alert.setHeaderText("YOU GOT HIT FROGGY");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                   // alert.setOnHidden(evt -> frogStage.close());
+                    alert.setOnHidden(evt -> frogStage.close());
                     alert.show();
                     dead = true;
         }
@@ -745,10 +848,13 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("ROADKILL");
                     alert.setHeaderText("YOU GOT HIT FROGGY");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.setOnHidden(evt -> frogStage.close());
                     alert.show();
                     dead = true;
         }
@@ -772,10 +878,13 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+                    gctime.stop();
+                     gc1time.stop();
+                    yctime.stop();
                     alert.setTitle("ROADKILL");
                     alert.setHeaderText("YOU GOT HIT FROGGY");
                     alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> Platform.exit());
+                    alert.setOnHidden(evt -> frogStage.close());
                     alert.show();
                     dead = true;
         }
