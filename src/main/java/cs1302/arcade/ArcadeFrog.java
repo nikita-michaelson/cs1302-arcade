@@ -363,11 +363,12 @@ public class ArcadeFrog extends Application{
                     alert.setOnHidden(evt -> frogStage.close());    
                     alert.showAndWait();
                     dead = true;
-                        }
+                        }else{
                 frogX-=1;
                 frogSprite.setPosition(frogX,frogY);
                 left();
                 updateScore();
+            }
                 }
             }
         );
@@ -392,12 +393,14 @@ public class ArcadeFrog extends Application{
                     alert.setOnHidden(evt -> frogStage.close());
                     alert.showAndWait();
                     dead = true;
-                    } 
+                    } else
+                    {
                 frogX+=1;
                 frogSprite.setPosition(frogX,frogY);
                 right();
                 updateScore();
                 }
+            }
             }
         );
     }
@@ -421,12 +424,13 @@ public class ArcadeFrog extends Application{
 
                     alert.showAndWait();
                     dead = true;
-                    }
+                    }else
+                    {
                 frogY-=1;
                 frogSprite.setPosition(frogX,frogY);
                 up();
-        
                 updateScore();
+            }
             }
         }
         );
@@ -450,11 +454,12 @@ public class ArcadeFrog extends Application{
                      alert.setOnHidden(evt -> frogStage.close());
                     alert.showAndWait();
                     dead = true;   
-                    }
+                    }else{
                 frogY+=1;
                 frogSprite.setPosition(frogX,frogY);
                 down();
                 updateScore();
+                }
                 }
             }
         );
@@ -464,7 +469,7 @@ public class ArcadeFrog extends Application{
     public void left(){
        double x = frogX * 1.0;
        double y = frogY *1.0;
-       if(moveCheck(x,y))
+       if(moveCheck(x,y)&& frogX>=0)
        {//if not a water spot, move
         this.removeNodeFromGridPane(frogSprite.getImage());
         frogGrid.add(frogSprite.getImage(),frogX,frogY);
