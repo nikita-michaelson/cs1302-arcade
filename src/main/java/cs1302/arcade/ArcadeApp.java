@@ -70,11 +70,11 @@ public class ArcadeApp extends Application {
         HBox hbox = new HBox();
         Text t = new Text ("Pick a Game");
         Button frogButton = new Button();
-        Image frogImage = new Image("frogger/froggerLogo.png",400,400,false,false);
-        frogButton.setGraphic(new ImageView(frogImage));
+//        Image frogImage = new Image("frogger/froggerLogo.png",400,400,false,false);
+        //      frogButton.setGraphic(new ImageView(frogImage));
         Button tf8 = new Button();
-        Image twentyImage = new Image("frogger/2048logo.png",400,400,false,false);
-        tf8.setGraphic(new ImageView(twentyImage));
+        // Image twentyImage = new Image("frogger/2048logo.png",400,400,false,false);
+        // tf8.setGraphic(new ImageView(twentyImage));
         EventHandler<ActionEvent> tf = event -> {
             Stage twentyStage = new Stage();
             setTF8();
@@ -136,128 +136,5 @@ public class ArcadeApp extends Application {
             }
         }
     }
-    public void addRandom(){
-        int row;
-        int col;
-        //while r/c not empty
-        // while(){}
-        //random 2 or 4 (weigtheted towards 2)
-        //add image to col
-    }
    
-    public void addSum(){
-        //switch over string for image
-        // switch(){}
-    }
-
-
-  public void moveRowRight(){
-    for(int i = 0; i < 4; i++){
-      moveRight(i,3);
-    }
-  }
-  public void moveRowLeft(){
-    for(int i = 0; i < 4; i++){
-      moveLeft(i,0);
-    }
-  }
-  public void moveColDown(){
-    for(int i = 0; i < 4; i++){
-      moveDown(3,i);
-    }
-  }
-  public void moveColUp(){
-    for(int i = 0; i < 4; i++){
-      moveUp(0,i);
-    }
-  }
-  public void moveRight(int i, int j){
-
-    if(cell[i][j] == 0){
-    for(int w = j; w >= 0 ; w--)
-    {
-      if(cell[i][w] != 0){
-        cell[i][j] = cell[i][w];
-        cell[i][w] = 0;
-        break;
-      }
-    }
-  }
-  if(j < 3 && cell[i][j] == cell[i][j+1]){
-    combineRight(i,j);
-  }
-    if(j >0){
-      moveRight(i,j-1);
-    }
-  }
-  public void moveDown(int i , int j){
-    if(cell[i][j] == 0){
-    for(int w = i; w >= 0 ; w--)
-    {
-      if(cell[w][j] != 0){
-        cell[i][j] = cell[w][j];
-        cell[w][j] = 0;
-        break;
-      }
-    }
-  }
-  if(i < 3 && cell[i][j] == cell[i+1][j]){
-    combineDown(i,j);
-  }
-    if(i > 0){
-      moveDown(i-1,j);
-    }
-  }
-  public void moveLeft(int i, int j){
-    if(cell[i][j] == 0){
-    for(int w = j; w <= 3 ; w++)
-    {
-      if(cell[i][w] != 0){
-        cell[i][j] = cell[i][w];
-        cell[i][w] = 0;
-        break;
-      }
-    }
-  }
-  if(j > 0 && cell[i][j] == cell[i][j-1]){
-    combineLeft(i,j);
-  }
-    if(j < 3){
-      moveLeft(i,j+1);
-    }
-  }
-  public void moveUp(int i, int j){
-    if(cell[i][j] == 0){
-    for(int w = i; w <= 3 ; w++)
-    {
-      if(cell[w][j] != 0){
-        cell[i][j] = cell[w][j];
-        cell[w][j] = 0;
-        break;
-      }
-    }
-  }
-  if(i > 0 && cell[i][j] == cell[i-1][j]){
-    combineUp(i,j);
-  }
-    if(i < 3){
-      moveUp(i+1,j);
-    }
-  }
-  public void combineRight(int i, int j){
-    cell[i][j+1] = (cell[i][j]  + cell[i][j+1]);
-    cell[i][j] = 0;
-  }
-  public void combineDown(int i, int j){
-    cell[i][j] = (cell[i][j]  + cell[i+1][j]);
-    cell[i+1][j] = 0;
-  }
-  public void combineLeft(int i, int j){
-    cell[i][j-1] = (cell[i][j]  + cell[i][j-1]);
-    cell[i][j] = 0;
-  }
-  public void combineUp(int i, int j){
-    cell[i][j] = (cell[i][j]  + cell[i-1][j]);
-    cell[i-1][j] = 0;
-  }
 } // ArcadeApp
