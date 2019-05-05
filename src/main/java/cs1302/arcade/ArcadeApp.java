@@ -95,6 +95,10 @@ public class ArcadeApp extends Application {
             frogStage.initOwner(stage);
             frogStage.sizeToScene();
             frogStage.show();
+            if(frogger.dead ==true)
+            {
+              frogStage.close();
+            }
 
         };
         frogButton.setOnAction(frogButtonAction);
