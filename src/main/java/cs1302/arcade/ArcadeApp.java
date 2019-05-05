@@ -70,11 +70,11 @@ public class ArcadeApp extends Application {
         HBox hbox = new HBox();
         Text t = new Text ("Pick a Game");
         Button frogButton = new Button();
-//        Image frogImage = new Image("frogger/froggerLogo.png",400,400,false,false);
-        //      frogButton.setGraphic(new ImageView(frogImage));
+        Image frogImage = new Image("frogger/froggerLogo.png",400,400,false,false);
+        frogButton.setGraphic(new ImageView(frogImage));
         Button tf8 = new Button();
-        // Image twentyImage = new Image("frogger/2048logo.png",400,400,false,false);
-        // tf8.setGraphic(new ImageView(twentyImage));
+        Image twentyImage = new Image("frogger/2048logo.png",400,400,false,false);
+        tf8.setGraphic(new ImageView(twentyImage));
         EventHandler<ActionEvent> tf = event -> {
             Stage twentyStage = new Stage();
             setTF8();
@@ -82,7 +82,6 @@ public class ArcadeApp extends Application {
             twentyStage.initModality(Modality.WINDOW_MODAL);
             twentyStage.initOwner(stage);
             twentyStage.sizeToScene();
-
             twentyStage.show();
         };
         tf8.setOnAction(tf);
@@ -90,10 +89,12 @@ public class ArcadeApp extends Application {
         EventHandler<ActionEvent> frogButtonAction = event -> {
             ArcadeFrog frogger = new ArcadeFrog();
             frogStage = new Stage();
+            
             frogStage.setScene(frogger.initScene());
             frogStage.initModality(Modality.WINDOW_MODAL);
             frogStage.initOwner(stage);
             frogStage.sizeToScene();
+            frogStage.setResizable(false);
             frogStage.show();
             if(frogger.dead ==true)
             {
