@@ -47,7 +47,7 @@ public class ArcadeApp extends Application {
     Text scores;
     Text scoreV;
     Text win;
-    
+    Button reset;
     /** {@inheritdoc} */
     @Override
     public void start(Stage stage) {
@@ -73,7 +73,7 @@ public class ArcadeApp extends Application {
             twentyStage.initModality(Modality.WINDOW_MODAL);
             twentyStage.initOwner(stage);
             twentyStage.sizeToScene();
-            twentyStage.setResizeable(false);
+            twentyStage.setResizable(false);
             twentyStage.show();
         };
         tf8.setOnAction(tf);
@@ -113,11 +113,14 @@ public class ArcadeApp extends Application {
         grid.setPrefSize(400,400);
         grid.setGridLinesVisible(true);
         v = new VBox();
+        reset = new Button("reset");
+        EventHandler<ActionEvent> re = e -> resets();
+        reset.setOnAction(re);
         scores = new Text("Score: ");
         scoreV = new Text("0");
         win = new Text("You win!");
         win.setVisible(false);
-        v.getChildren().addAll(scores,scoreV,win);
+        v.getChildren().addAll(scores,scoreV,win,reset);
         //start image method
         //Adds all blanks except to one random
         hbox.getChildren().addAll(v,grid);
@@ -129,6 +132,14 @@ public class ArcadeApp extends Application {
         startGame();
         setGrid();
         //twenty.add(hbox);
+    }
+    /**
+     * Resets 2049
+     */
+    public void resets(){
+        startGame();
+        score(0);
+        setGrid();
     }
     /**
      * Sets the gridPanes based on the cell array
