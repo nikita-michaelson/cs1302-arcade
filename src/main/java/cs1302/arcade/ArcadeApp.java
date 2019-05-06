@@ -25,6 +25,9 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.scene.paint.Color;
+/**
+ * Plays the two games of frogger and 2048
+ */
 public class ArcadeApp extends Application {
 
     Image intro = new Image("frogger/introImage.png");
