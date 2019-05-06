@@ -25,13 +25,14 @@ public class Sprite extends Region{
  *@param image the image to be assigned to the sprite
  */
     public Sprite(ImageView imageView,Image image) {
+        //initialize variables
         this.image = image;
         this.imageView = imageView;
         width = imageView.getFitWidth();
         height = imageView.getFitHeight();
         positionX = 0;
         positionY = 0;
-    }
+    }//Sprite
     
     /** Getter method for a sprites image 
      *@return imageView 
@@ -39,29 +40,30 @@ public class Sprite extends Region{
     public ImageView getImage()
         {
             return imageView;
-        }
+        }//getImage
     
     /** Setter method for the sprite's position 
      *@param x is the x coordinate
      *@param y is the y coordinate
      */
     public void setPosition(int x, int y) {
+        //change position
         positionX = x;
         positionY = y;
-    }
+    }//setPostition
     
     /** method that returns x coord
      *@return positionX
      */
     public int getX(){
         return positionX;
-    }
+    }//getX
 
     /** method that returns y coord
      *@return positionY
      */
     public int getY(){
         return positionY;
-    }
+    }//getY
    
 }
