@@ -36,17 +36,17 @@ public class ArcadeApp extends Application {
      * @return the key event handler
      */
 /*
-    private EventHandler<? super KeyEvent> createKeyHandlerTwenty() {
-	return event -> {
-	    System.out.println(event);
-	    if (event.getCode() == KeyCode.LEFT)
-        {
-
-        }
-	    if (event.getCode() == KeyCode.RIGHT) r.setX(r.getX() + 10.0);
-	    // TODO bounds checking
-	};
-    } // createKeyHandler
+  private EventHandler<? super KeyEvent> createKeyHandlerTwenty() {
+  return event -> {
+  System.out.println(event);
+  if (event.getCode() == KeyCode.LEFT)
+  {
+  
+  }
+  if (event.getCode() == KeyCode.RIGHT) r.setX(r.getX() + 10.0);
+  // TODO bounds checking
+  };
+  } // createKeyHandler
 */
     Scene twenty;
     GridPane grid;
@@ -55,18 +55,18 @@ public class ArcadeApp extends Application {
     //frogger instance variables
     public Stage frogStage; 
     Stage stage;
-
-
+    
+    
     /** {@inheritdoc} */
     @Override
     public void start(Stage stage) {
-
+        
         /* You are allowed to rewrite this start method, add other methods,
          * files, classes, etc., as needed. This currently contains some
          * simple sample code for mouse and keyboard interactions with a node
          * (rectangle) in a group.
          */
-
+        
         HBox hbox = new HBox();
         Text t = new Text ("Pick a Game");
         Button frogButton = new Button();
@@ -85,10 +85,10 @@ public class ArcadeApp extends Application {
             twentyStage.show();
         };
         tf8.setOnAction(tf);
-
+        
         EventHandler<ActionEvent> frogButtonAction = event -> {
             ArcadeFrog frogger = new ArcadeFrog();
-        
+            
             
             frogger.frogStage.setScene(frogger.initScene());
             frogger.frogStage.initModality(Modality.WINDOW_MODAL);
@@ -98,9 +98,8 @@ public class ArcadeApp extends Application {
             frogger.frogStage.show();
             if(frogger.dead ==true)
             {
-              frogger.frogStage.close();
+                frogger.frogStage.close();
             }
-
         };
         frogButton.setOnAction(frogButtonAction);
         //hbox.setStyle("-fx-background-color :black;");
@@ -110,10 +109,9 @@ public class ArcadeApp extends Application {
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
-
     } // start
-
-
+    
+    
     public void setTF8(){
         HBox hbox = new HBox();
         grid = new GridPane();
@@ -141,5 +139,5 @@ public class ArcadeApp extends Application {
             }
         }
     }
-   
+    
 } // ArcadeApp

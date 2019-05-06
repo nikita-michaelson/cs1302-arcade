@@ -6,7 +6,7 @@ import javafx.application.Application;
  * Driver for the {@code ArcadeApp} class.
  */
 public class ArcadeDriver {
-
+    
     /**
      * Main entry-point into the application.
      * @param args the command-line arguments.
@@ -22,5 +22,5 @@ public class ArcadeDriver {
             System.exit(1);
         } // try
     } // main
-
+    
 } // ArcadeDriver

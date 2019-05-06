@@ -36,7 +36,7 @@ import javafx.scene.control.Alert.AlertType;
  * Frogger Game.
  */
 public class ArcadeFrog extends Application{
-   //scene group
+    //scene group
     Scene leapfrog;
     StackPane frogStack;
     GridPane frogGrid;
@@ -45,8 +45,6 @@ public class ArcadeFrog extends Application{
     ImageView win = new ImageView(winn);
     Image losee = new Image("frogger/lose.jpg",300,300,false,false);
     ImageView lose = new ImageView(losee);
-    
-
     //------------------
     Image gridImage = new Image("frogger/introGrid.png");
     ImageView introGrid = new ImageView(gridImage);
@@ -110,7 +108,7 @@ public class ArcadeFrog extends Application{
     Timeline gc1time = new Timeline();
     Timeline yctime = new Timeline();
     Stage frogStage;
-
+    
     //booleans and numbers 
     boolean yright = true;
     boolean gcright = true;
@@ -133,21 +131,21 @@ public class ArcadeFrog extends Application{
         
     }
     /** An Empty constructor to allow reference to this classes
-    * variables elsewhere.
-    */
+     * variables elsewhere.
+     */
     public ArcadeFrog(){
         frogStage = new Stage();
         dead = false;
     }
     /** Method that returns initialised frogger Scene
-    *@return this.initScene()
-    */
+     *@return this.initScene()
+     */
     public Scene froggerScene(){
         return this.initScene();
     }
     /** Method that returns initialised frogger Scene
-    *@return leapfrog
-    */
+     *@return leapfrog
+     */
     public Scene initScene(){
         pointsString = Integer.toString(pointsInt);
         frogVbox = new VBox();
@@ -158,7 +156,7 @@ public class ArcadeFrog extends Application{
                                     "10 points per move in level 1.\n"+
                                     "15 points per move in level 2.\n"+
                                     "25 points per move in level 3.");
-        //add all the instructions, ponts and level information and initialize
+        //add all the instructions, points and level information and initialize
         info.getChildren().addAll(frogInstructions,score,points,level,levelNum);
         this.initialiseFrogGrid();
         frogVbox.getChildren().addAll(info,frogStack);
@@ -185,7 +183,7 @@ public class ArcadeFrog extends Application{
         imgv.setFitWidth(100);
         imgv.setFitHeight(100);
     }
-
+    
     /**Method that formats all used imageViews.*/
     public void imageFormatting(){
         this.frogImageFormat(frog);
@@ -219,7 +217,7 @@ public class ArcadeFrog extends Application{
         this.frogImageFormat(road15);
         this.frogImageFormat(road16); 
     }
-
+    
     /** Method that initialises the frogger gridpane.*/
     public void initialiseFrogGrid(){
         //create stack and gtid pane add all visual attributes
@@ -267,23 +265,23 @@ public class ArcadeFrog extends Application{
         frogGrid.add(road15,4,5);
         frogStack.getChildren().add(frogGrid);   
     }
-
+    
     /** Method to update score displayed in frogger scene.*/
     public void updateScore()
         {
             //each move warrants level specific points
             if(frogLevel == 1)
             {
-            pointsInt+=10;
-            points.setText(Integer.toString(pointsInt));
+                pointsInt+=10;
+                points.setText(Integer.toString(pointsInt));
             }else if(frogLevel == 2)
             {
-            pointsInt+=15;
-            points.setText(Integer.toString(pointsInt));
+                pointsInt+=15;
+                points.setText(Integer.toString(pointsInt));
             }else if(frogLevel == 3)
             {
-            pointsInt+=25;
-            points.setText(Integer.toString(pointsInt));
+                pointsInt+=25;
+                points.setText(Integer.toString(pointsInt));
             }
         }
     
@@ -291,15 +289,15 @@ public class ArcadeFrog extends Application{
     public void updateLevel()
         {
             //stop enemy timeline
-                gctime.stop();
-                gc1time.stop();
-                yctime.stop();
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
             if(frogLevel == 1)
             {//reset sprite positions then restart timeline
                 this.resetSprites();
                 frogLevel = 2;
                 enemySpeed = .5;
-               levelNum.setText("2");
+                levelNum.setText("2");
                 this.prepareEnemyTimeline();
             }else if(frogLevel == 2)
             {
@@ -310,26 +308,26 @@ public class ArcadeFrog extends Application{
                 this.prepareEnemyTimeline();
             }else if (frogLevel == 3)
             {//if won, throw win dialogue box
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("YOU WIN!!");
-                    alert.setHeaderText("CONGRATS FROGGY");
-                    alert.setGraphic(win);
-                    alert.setContentText("You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.showAndWait();
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("YOU WIN!!");
+                alert.setHeaderText("CONGRATS FROGGY");
+                alert.setGraphic(win);
+                alert.setContentText("You scored :"+pointsInt+" points !");
+                alert.setOnHidden(evt -> frogStage.close());
+                alert.showAndWait();
             }
         }
-        /**Method to move sprites back to their original position.*/
-        public void resetSprites(){
-            //put sprites back in original position
-            this.removeNodeFromGridPane(greenCarSprite.getImage());
+    /**Method to move sprites back to their original position.*/
+    public void resetSprites(){
+        //put sprites back in original position
+        this.removeNodeFromGridPane(greenCarSprite.getImage());
                 frogGrid.add(greenCarSprite.getImage(),1,3);
                 greenCarSprite.setPosition(1,3);
                 this.removeNodeFromGridPane(yellowCarSprite.getImage());
                 frogGrid.add(yellowCarSprite.getImage(),2,0);
-                 yellowCarSprite.setPosition(2,0);
-                 this.removeNodeFromGridPane(frogSprite.getImage());
-                 frogGrid.add(frogSprite.getImage(),2,5);
+                yellowCarSprite.setPosition(2,0);
+                this.removeNodeFromGridPane(frogSprite.getImage());
+                frogGrid.add(frogSprite.getImage(),2,5);
                 frogSprite.setPosition(2,5);
                 this.removeNodeFromGridPane(greenCar1Sprite.getImage());
                 frogGrid.add(greenCar1Sprite.getImage(),3,1);
@@ -342,140 +340,144 @@ public class ArcadeFrog extends Application{
                 gc1Y = 1;
                 ycX = 2;
                 ycY = 0;
-        }
+    }
     /** Method that creates handle for left movement.*/
     public void createFrogLeftHandler() {
-            leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            //if left key is pushed and out of bounds then stop timelines and throw death alert
+        leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+                //if left key is pushed and out of bounds then stop timelines and throw death alert
                 //else move left and update score
-             if (key.getCode() == KeyCode.LEFT)
+                if (key.getCode() == KeyCode.LEFT)
                 {
                     if(frogSprite.getX()==0)
-                        {
-                    gctime.stop();
-                    gc1time.stop();
-                    yctime.stop();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("OUT OF BOUNDS");
-                    alert.setHeaderText("YOU WENT OUT OF BOUNDS");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());    
-                    alert.showAndWait();
-                    dead = true;
-                        }else{
-                frogX-=1;
-                frogSprite.setPosition(frogX,frogY);
-                left();
-                updateScore();
-            }
+                    {
+                        gctime.stop();
+                        gc1time.stop();
+                        yctime.stop();
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("OUT OF BOUNDS");
+                        alert.setHeaderText("YOU WENT OUT OF BOUNDS");
+                        alert.setGraphic(lose);
+                        alert.setContentText("Better Luck Next Time!You scored:"+pointsInt+
+                                             " points!");
+                        alert.setOnHidden(evt -> frogStage.close());    
+                        alert.showAndWait();
+                        dead = true;
+                    }else{
+                        frogX-=1;
+                        frogSprite.setPosition(frogX,frogY);
+                        left();
+                        updateScore();
+                    }
                 }
             }
-        );
+            );
     }
     /** Method that creates handle for right movement.*/
-        public void createFrogRightHandler() {
+    public void createFrogRightHandler() {
         leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            //if right key is pushed and out of bounds then stop timelines and throw death alert
+                //if right key is pushed and out of bounds then stop timelines and throw death alert
                 //else move right and update score
-            if (key.getCode() == KeyCode.RIGHT)
+                if (key.getCode() == KeyCode.RIGHT)
                 {
-                   if(frogSprite.getX()==4)
+                    if(frogSprite.getX()==4)
                     {
-                    gctime.stop();
-                    gc1time.stop();
-                    yctime.stop();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("OUT OF BOUNDS");
-                    alert.setHeaderText("YOU WENT OUT OF BOUNDS");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.showAndWait();
-                    dead = true;
+                        gctime.stop();
+                        gc1time.stop();
+                        yctime.stop();
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("OUT OF BOUNDS");
+                        alert.setHeaderText("YOU WENT OUT OF BOUNDS");
+                        alert.setGraphic(lose);
+                        alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+
+                                             " points !");
+                        alert.setOnHidden(evt -> frogStage.close());
+                        alert.showAndWait();
+                        dead = true;
                     } else
                     {
-                frogX+=1;
-                frogSprite.setPosition(frogX,frogY);
-                right();
-                updateScore();
+                        frogX+=1;
+                        frogSprite.setPosition(frogX,frogY);
+                        right();
+                        updateScore();
+                    }
                 }
             }
-            }
-        );
+            );
     }
     /** Method that creates handle for up movement.*/
-        public void createFrogUpHandler() {
+    public void createFrogUpHandler() {
         leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            //if up key is pushed and out of bounds then stop timelines and throw death alert
+                //if up key is pushed and out of bounds then stop timelines and throw death alert
                 //else move up and update score
-            if (key.getCode() == KeyCode.UP){
-                if(frogSprite.getY()==0)
+                if (key.getCode() == KeyCode.UP){
+                    if(frogSprite.getY()==0)
                     {
-                    gctime.stop();
-                    gc1time.stop();
-                    yctime.stop();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("OUT OF BOUNDS");
-                    alert.setHeaderText("YOU WENT OUT OF BOUNDS");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-
-                    alert.showAndWait();
-                    dead = true;
+                        gctime.stop();
+                        gc1time.stop();
+                        yctime.stop();
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("OUT OF BOUNDS");
+                        alert.setHeaderText("YOU WENT OUT OF BOUNDS");
+                        alert.setGraphic(lose);
+                        alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+
+                                             " points !");
+                        alert.setOnHidden(evt -> frogStage.close());
+                        
+                        alert.showAndWait();
+                        dead = true;
                     }else
                     {
-                frogY-=1;
-                frogSprite.setPosition(frogX,frogY);
-                up();
-                updateScore();
+                        frogY-=1;
+                        frogSprite.setPosition(frogX,frogY);
+                        up();
+                        updateScore();
+                    }
+                }
             }
-            }
-        }
-        );
+            );
     }
     /** Method that creates handle for down movement.*/
-        public void createFrogDownHandler() {
+    public void createFrogDownHandler() {
         leapfrog.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            //if down key is pushed and out of bounds then stop timelines and throw death alert
+                //if down key is pushed and out of bounds then stop timelines and throw death alert
                 //else move down and update score
-            if(key.getCode() == KeyCode.DOWN){
-                if(frogSprite.getY()==5)
+                if(key.getCode() == KeyCode.DOWN){
+                    if(frogSprite.getY()==5)
                     {
-                    gctime.stop();
-                    gc1time.stop();
-                    yctime.stop();
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("OUT OF BOUNDS");
-                    alert.setHeaderText("YOU WENT OUT OF BOUNDS");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                     alert.setOnHidden(evt -> frogStage.close());
-                    alert.showAndWait();
-                    dead = true;   
+                        gctime.stop();
+                        gc1time.stop();
+                        yctime.stop();
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("OUT OF BOUNDS");
+                        alert.setHeaderText("YOU WENT OUT OF BOUNDS");
+                        alert.setGraphic(lose);
+                        alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+
+                                             " points !");
+                        alert.setOnHidden(evt -> frogStage.close());
+                        alert.showAndWait();
+                        dead = true;   
                     }else{
-                frogY+=1;
-                frogSprite.setPosition(frogX,frogY);
-                down();
-                updateScore();
-                }
+                        frogY+=1;
+                        frogSprite.setPosition(frogX,frogY);
+                        down();
+                        updateScore();
+                    }
                 }
             }
-        );
+            );
     }
-
+    
     /** Method that creates left movement.*/
     public void left(){
-       double x = frogX * 1.0;
-       double y = frogY *1.0;
-       if(moveCheck(x,y)&& frogX>=0)
-       {//if not a water spot, move
-        this.removeNodeFromGridPane(frogSprite.getImage());
-        frogGrid.add(frogSprite.getImage(),frogX,frogY);
-        if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        double x = frogX * 1.0;
+        double y = frogY *1.0;
+        if(moveCheck(x,y)&& frogX>=0)
+        {//if not a water spot, move
+            this.removeNodeFromGridPane(frogSprite.getImage());
+            frogGrid.add(frogSprite.getImage(),frogX,frogY);
+            if(frogSprite.getX()==0 && frogSprite.getY()==0)
             {
-            updateLevel();
+                updateLevel();
             }
         }
         else
@@ -483,61 +485,63 @@ public class ArcadeFrog extends Application{
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("Oh No");
-                    alert.setHeaderText("YOU WENT FOR A DIP");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.showAndWait();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("Oh No");
+            alert.setHeaderText("YOU WENT FOR A DIP");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.showAndWait();
+            dead = true;
         }
     }
     /** Method that creates rightleft movement.*/
     public void right(){
-        //check if valid move if  valid set and update Score , if not set and throw up death dialogue box
-       double x = frogX * 1.0;
-       double y = frogY * 1.0;
-       if(moveCheck(x,y))
-       {//if not a water spot , move 
-        this.removeNodeFromGridPane(frogSprite.getImage());
-        frogGrid.add(frogSprite.getImage(),frogX,frogY);
-         if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        //check if valid move if  valid set and update Score
+        //, if not set and throw up death dialogue box
+        double x = frogX * 1.0;
+        double y = frogY * 1.0;
+        if(moveCheck(x,y))
+        {//if not a water spot , move 
+            this.removeNodeFromGridPane(frogSprite.getImage());
+            frogGrid.add(frogSprite.getImage(),frogX,frogY);
+            if(frogSprite.getX()==0 && frogSprite.getY()==0)
             {
-            updateLevel();
-             }
+                updateLevel();
+            }
         }
         else
         {//if a water spot , move then throw alert
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("Oh NO");
-                    alert.setHeaderText("YOU WENT FOR A DIP");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                     alert.setOnHidden(evt -> frogStage.close());
-                    alert.showAndWait();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("Oh NO");
+            alert.setHeaderText("YOU WENT FOR A DIP");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.showAndWait();
+            dead = true;
         }
     }
     /** Method that creates up movement.*/
     public void up(){
-        //check if valid move if  valid set and update Score , if not set and throw up death dialogue box
-       double x = frogX * 1.0;
-       double y = frogY *1.0;
-       if(moveCheck(x,y))
-       {//if not a water spot , move 
-        this.removeNodeFromGridPane(frogSprite.getImage());
-        frogGrid.add(frogSprite.getImage(),frogX,frogY);
-         if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        //check if valid move if  valid set and update Score ,
+        //if not set and throw up death dialogue box
+        double x = frogX * 1.0;
+        double y = frogY *1.0;
+        if(moveCheck(x,y))
+        {//if not a water spot , move 
+            this.removeNodeFromGridPane(frogSprite.getImage());
+            frogGrid.add(frogSprite.getImage(),frogX,frogY);
+            if(frogSprite.getX()==0 && frogSprite.getY()==0)
             {
-            updateLevel();
+                updateLevel();
             }
         }
         else
@@ -545,31 +549,32 @@ public class ArcadeFrog extends Application{
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                    gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("Oh NO");
-                    alert.setHeaderText("YOU WENT FOR A DIP");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.showAndWait();
-                    dead = true;
-
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("Oh NO");
+            alert.setHeaderText("YOU WENT FOR A DIP");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.showAndWait();
+            dead = true;
+            
         }
     }
     /** Method that creates down movement.*/
     public void down(){
-        //check if valid move if  valid set and update Score , if not set and throw up death dialogue box
-       double x = frogX * 1.0;
-       double y = frogY *1.0;
-       if(moveCheck(x,y))
-       {//if not a water spot , move
-        this.removeNodeFromGridPane(frogSprite.getImage());
-        frogGrid.add(frogSprite.getImage(),frogX,frogY);
-         if(frogSprite.getX()==0 && frogSprite.getY()==0)
+        //check if valid move if  valid set and update Score
+        //, if not set and throw up death dialogue box
+        double x = frogX * 1.0;
+        double y = frogY *1.0;
+        if(moveCheck(x,y))
+        {//if not a water spot , move
+            this.removeNodeFromGridPane(frogSprite.getImage());
+            frogGrid.add(frogSprite.getImage(),frogX,frogY);
+            if(frogSprite.getX()==0 && frogSprite.getY()==0)
             {
-            updateLevel();
+                updateLevel();
             }
         }
         else
@@ -577,46 +582,46 @@ public class ArcadeFrog extends Application{
             this.removeNodeFromGridPane(frogSprite.getImage());
             frogGrid.add(frogSprite.getImage(),frogX,frogY);
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                    gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("Oh No");
-                    alert.setHeaderText("YOU WENT FOR A DIP");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.showAndWait();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("Oh No");
+            alert.setHeaderText("YOU WENT FOR A DIP");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.showAndWait();
+            dead = true;
         }
     }
     /** Method that checks if fallen in water.*/
-      public boolean moveCheck(double x, double y){
+    public boolean moveCheck(double x, double y){
         double xx = x;
         double yy = y;
         //if coordinates are the same as any of the water blocks, fail move check
           if(this.compare(xx,1.0) == 0 && this.compare(yy,4.0)==0)
           {
-            return false;
+              return false;
           }else if(this.compare(xx,0.0)==0 && this.compare(yy,4.0) == 0)
           {
-            return false;
-        }else if(this.compare(xx,4.0) ==0 && this.compare(yy,4.0)==0)
-        {
-            return false;
-        }else if(this.compare(xx,3.0)==0 && this.compare(yy,2.0)==0)
-        {
-            return false;
-        }else if(this.compare(xx,2.0)== 0 && this.compare(yy,2.0)==0)
-        {
-            return false;
-        }else
-        {   
-        return true;
+              return false;
+          }else if(this.compare(xx,4.0) ==0 && this.compare(yy,4.0)==0)
+          {
+              return false;
+          }else if(this.compare(xx,3.0)==0 && this.compare(yy,2.0)==0)
+          {
+              return false;
+          }else if(this.compare(xx,2.0)== 0 && this.compare(yy,2.0)==0)
+          {
+              return false;
+          }else
+          {   
+              return true;
          }   
-      }
-
-      /**Method that accurately compares if doubles are equal.*/
-        public int compare(double x,double y)
+    }
+    
+    /**Method that accurately compares if doubles are equal.*/
+    public int compare(double x,double y)
         {
             int t = 1;
             double threshold = .0000001;
@@ -655,13 +660,13 @@ public class ArcadeFrog extends Application{
     
     /** Method to move the green car Sprite.*/
     public void gcMove(){
-    if(greenCarSprite.getX()<4&&(gcright == true || greenCarSprite.getX()==0))
-            {//if valid time , move right
+        if(greenCarSprite.getX()<4&&(gcright == true || greenCarSprite.getX()==0))
+        {//if valid time , move right
             gcRight();
-            }else {
+        }else {
             if(greenCarSprite.getX()==4||greenCarSprite.getX()>0){
-            //if valid time, move left
-            gcLeft();
+                //if valid time, move left
+                gcLeft();
             }
         }
     }
@@ -681,23 +686,23 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("ROADKILL");
-                    alert.setHeaderText("YOU GOT HIT FROGGY");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.show();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("ROADKILL");
+            alert.setHeaderText("YOU GOT HIT FROGGY");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.show();
+            dead = true;
         }
-
+        
     }
     /** Method to move the green car Sprite right.*/
     public void gcRight(){
-       gcX+=1;
-       //if rightmost go left
+        gcX+=1;
+        //if rightmost go left
         if(gcX==4)
         {
             gcright = false;
@@ -713,31 +718,31 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("ROADKILL");
-                    alert.setHeaderText("YOU GOT HIT FROGGY");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.show();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("ROADKILL");
+            alert.setHeaderText("YOU GOT HIT FROGGY");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.show();
+            dead = true;
         }
     }
     /** Method to move the green car1 Sprite.*/
     public void gc1Move(){
         if(greenCar1Sprite.getX()<4&&(gc1right == true || greenCar1Sprite.getX()==0))
-            {//if valid go right
+        {//if valid go right
             gc1Right();
-            }else {
+        }else {
             if(greenCar1Sprite.getX()==4||greenCar1Sprite.getX()>0){
-            //if valid go left
-            gc1Left();
+                //if valid go left
+                gc1Left();
             }
         }
     }
-
+    
     /** Method to move the green car1 Sprite left.*/
     public void gc1Left(){
         gc1X-=1;
@@ -752,21 +757,21 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("ROADKILL");
-                    alert.setHeaderText("YOU GOT HIT FROGGY");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.show();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("ROADKILL");
+            alert.setHeaderText("YOU GOT HIT FROGGY");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.show();
+            dead = true;
         }
     }
     /** Method to move the green car1 Sprite right.*/
     public void gc1Right(){
-       gc1X+=1;
+        gc1X+=1;
         if(gc1X==4)
         {
             gc1right = false;
@@ -782,33 +787,33 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {//if collison, throw alert
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("ROADKILL");
-                    alert.setHeaderText("YOU GOT HIT FROGGY");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.show();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("ROADKILL");
+            alert.setHeaderText("YOU GOT HIT FROGGY");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.show();
+            dead = true;
         }
     }
     /** Method to move the yellow car Sprite.*/
-     public void ycMove(){
-            if(yellowCarSprite.getX()<4&&(yright == true || yellowCarSprite.getX()==0))
-            {
-                //if valid go right
+    public void ycMove(){
+        if(yellowCarSprite.getX()<4&&(yright == true || yellowCarSprite.getX()==0))
+        {
+            //if valid go right
             ycRight();
-            }else {
+        }else {
             if(yellowCarSprite.getX()==4||yellowCarSprite.getX()>0){
-            ycLeft();
+                ycLeft();
             }
         }
     }
     /** Method to move the yellow car Sprite left.*/
     public void ycLeft(){
-         ycX-=1;
+        ycX-=1;
         //set p
         yellowCarSprite.setPosition(ycX,ycY);
         this.removeNodeFromGridPane(yellowCarSprite.getImage());
@@ -816,19 +821,19 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {//if collision then throw alert
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("ROADKILL");
-                    alert.setHeaderText("YOU GOT HIT FROGGY");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.show();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("ROADKILL");
+            alert.setHeaderText("YOU GOT HIT FROGGY");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.show();
+            dead = true;
         }
     }
-
+    
     /** Method to move the yellow car Sprite right.*/
     public void ycRight(){
         ycX+=1;
@@ -847,19 +852,19 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {//if collision throw alert
             Alert alert = new Alert(AlertType.INFORMATION);
-                    gctime.stop();
-                     gc1time.stop();
-                    yctime.stop();
-                    alert.setTitle("ROADKILL");
-                    alert.setHeaderText("YOU GOT HIT FROGGY");
-                    alert.setGraphic(lose);
-                    alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
-                    alert.setOnHidden(evt -> frogStage.close());
-                    alert.show();
-                    dead = true;
+            gctime.stop();
+            gc1time.stop();
+            yctime.stop();
+            alert.setTitle("ROADKILL");
+            alert.setHeaderText("YOU GOT HIT FROGGY");
+            alert.setGraphic(lose);
+            alert.setContentText("Better Luck Next Time! You scored :"+pointsInt+" points !");
+            alert.setOnHidden(evt -> frogStage.close());
+            alert.show();
+            dead = true;
         }
     }
-
+    
     /** Method to check if car hits frog.*/
     public boolean collisionCheck(){
         boolean crash = false;
