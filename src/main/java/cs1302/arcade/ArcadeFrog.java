@@ -136,13 +136,13 @@ public class ArcadeFrog extends Application{
     public ArcadeFrog(){
         frogStage = new Stage();
         dead = false;
-    }
+    }//ArcadeFrog
     /** Method that returns initialised frogger Scene
      *@return this.initScene()
      */
     public Scene froggerScene(){
         return this.initScene();
-    }
+    }//froggerScene
     /** Method that returns initialised frogger Scene
      *@return leapfrog
      */
@@ -182,10 +182,11 @@ public class ArcadeFrog extends Application{
     public void frogImageFormat(ImageView imgv){
         imgv.setFitWidth(100);
         imgv.setFitHeight(100);
-    }
+    }//frogImageFormat
     
     /**Method that formats all used imageViews.*/
     public void imageFormatting(){
+        //format all images
         this.frogImageFormat(frog);
         this.frogImageFormat(log);
         this.frogImageFormat(log2);
@@ -216,7 +217,7 @@ public class ArcadeFrog extends Application{
         this.frogImageFormat(road14);
         this.frogImageFormat(road15);
         this.frogImageFormat(road16); 
-    }
+    }//imageFormatting
     
     /** Method that initialises the frogger gridpane.*/
     public void initialiseFrogGrid(){
@@ -263,6 +264,7 @@ public class ArcadeFrog extends Application{
         frogGrid.add(road14,4,3);
         frogGrid.add(water5,4,4);
         frogGrid.add(road15,4,5);
+        //add children
         frogStack.getChildren().add(frogGrid);   
     }
     
@@ -332,6 +334,7 @@ public class ArcadeFrog extends Application{
                 this.removeNodeFromGridPane(greenCar1Sprite.getImage());
                 frogGrid.add(greenCar1Sprite.getImage(),3,1);
                 greenCar1Sprite.setPosition(3,1);
+                //reset variables
                 frogX = 2;
                 frogY = 5;
                 gcX = 1;
@@ -349,7 +352,7 @@ public class ArcadeFrog extends Application{
                 if (key.getCode() == KeyCode.LEFT)
                 {
                     if(frogSprite.getX()==0)
-                    {
+                    {//stop timelines
                         gctime.stop();
                         gc1time.stop();
                         yctime.stop();
@@ -362,7 +365,7 @@ public class ArcadeFrog extends Application{
                         alert.setOnHidden(evt -> frogStage.close());    
                         alert.showAndWait();
                         dead = true;
-                    }else{
+                    }else{//go left
                         frogX-=1;
                         frogSprite.setPosition(frogX,frogY);
                         left();
@@ -380,7 +383,7 @@ public class ArcadeFrog extends Application{
                 if (key.getCode() == KeyCode.RIGHT)
                 {
                     if(frogSprite.getX()==4)
-                    {
+                    {//stop timelines
                         gctime.stop();
                         gc1time.stop();
                         yctime.stop();
@@ -394,7 +397,7 @@ public class ArcadeFrog extends Application{
                         alert.showAndWait();
                         dead = true;
                     } else
-                    {
+                    {// go right
                         frogX+=1;
                         frogSprite.setPosition(frogX,frogY);
                         right();
@@ -411,7 +414,7 @@ public class ArcadeFrog extends Application{
                 //else move up and update score
                 if (key.getCode() == KeyCode.UP){
                     if(frogSprite.getY()==0)
-                    {
+                    {//stop timelines
                         gctime.stop();
                         gc1time.stop();
                         yctime.stop();
@@ -426,7 +429,7 @@ public class ArcadeFrog extends Application{
                         alert.showAndWait();
                         dead = true;
                     }else
-                    {
+                    {//go up
                         frogY-=1;
                         frogSprite.setPosition(frogX,frogY);
                         up();
@@ -443,7 +446,7 @@ public class ArcadeFrog extends Application{
                 //else move down and update score
                 if(key.getCode() == KeyCode.DOWN){
                     if(frogSprite.getY()==5)
-                    {
+                    {//stop timelines
                         gctime.stop();
                         gc1time.stop();
                         yctime.stop();
@@ -456,7 +459,7 @@ public class ArcadeFrog extends Application{
                         alert.setOnHidden(evt -> frogStage.close());
                         alert.showAndWait();
                         dead = true;   
-                    }else{
+                    }else{//go down
                         frogY+=1;
                         frogSprite.setPosition(frogX,frogY);
                         down();
@@ -469,6 +472,8 @@ public class ArcadeFrog extends Application{
     
     /** Method that creates left movement.*/
     public void left(){
+        //check if valid move if  valid set and update Score
+        //, if not set and throw up death dialogue box
         double x = frogX * 1.0;
         double y = frogY *1.0;
         if(moveCheck(x,y)&& frogX>=0)
@@ -497,7 +502,7 @@ public class ArcadeFrog extends Application{
             dead = true;
         }
     }
-    /** Method that creates rightleft movement.*/
+    /** Method that creates right movement.*/
     public void right(){
         //check if valid move if  valid set and update Score
         //, if not set and throw up death dialogue box
@@ -630,13 +635,13 @@ public class ArcadeFrog extends Application{
                 t = 0;
             }
             return t;
-        }
+        }//compare
     
     
     /**Method that removes nodes from GridPane.*/
     private void removeNodeFromGridPane(Node n) {
         frogGrid.getChildren().remove(n);    
-    }
+    }//removeNodeFromGridPane
     
     /**Method that creates and starts the Enemy Timeline. */
     public void prepareEnemyTimeline(){
@@ -647,6 +652,7 @@ public class ArcadeFrog extends Application{
         KeyFrame gc1key = new KeyFrame(Duration.seconds(enemySpeed),green1Move);
         EventHandler<ActionEvent> yellowMove = event -> ycMove();
         KeyFrame yckey = new KeyFrame(Duration.seconds(enemySpeed),yellowMove);
+        //set cycle count
         gctime.setCycleCount(Timeline.INDEFINITE);
         gc1time.setCycleCount(Timeline.INDEFINITE);
         yctime.setCycleCount(Timeline.INDEFINITE);
@@ -656,7 +662,7 @@ public class ArcadeFrog extends Application{
         gctime.play();
         gc1time.play();
         yctime.play();
-    }
+    }//prepare enemy timeline
     
     /** Method to move the green car Sprite.*/
     public void gcMove(){
@@ -686,6 +692,7 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+            //stop timeline
             gctime.stop();
             gc1time.stop();
             yctime.stop();
@@ -718,6 +725,7 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+             //stop timeline
             gctime.stop();
             gc1time.stop();
             yctime.stop();
@@ -746,6 +754,7 @@ public class ArcadeFrog extends Application{
     /** Method to move the green car1 Sprite left.*/
     public void gc1Left(){
         gc1X-=1;
+        //if leftmost go right
         if(gc1X==1)
         {
             gc1right = true;
@@ -757,6 +766,7 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {
             Alert alert = new Alert(AlertType.INFORMATION);
+             //stop timeline
             gctime.stop();
             gc1time.stop();
             yctime.stop();
@@ -772,6 +782,7 @@ public class ArcadeFrog extends Application{
     /** Method to move the green car1 Sprite right.*/
     public void gc1Right(){
         gc1X+=1;
+        //if leftmost go right
         if(gc1X==4)
         {
             gc1right = false;
@@ -805,7 +816,7 @@ public class ArcadeFrog extends Application{
         {
             //if valid go right
             ycRight();
-        }else {
+        }else {//if valid go left
             if(yellowCarSprite.getX()==4||yellowCarSprite.getX()>0){
                 ycLeft();
             }
@@ -821,6 +832,7 @@ public class ArcadeFrog extends Application{
         if(collisionCheck())
         {//if collision then throw alert
             Alert alert = new Alert(AlertType.INFORMATION);
+             //stop timeline
             gctime.stop();
             gc1time.stop();
             yctime.stop();
@@ -837,10 +849,12 @@ public class ArcadeFrog extends Application{
     /** Method to move the yellow car Sprite right.*/
     public void ycRight(){
         ycX+=1;
+        //if leftmost go right
         if(ycX==4)
         {
             yright = false;
         }
+        //if rightmost go left
         if(ycX==1)
         {
             yright = true;
