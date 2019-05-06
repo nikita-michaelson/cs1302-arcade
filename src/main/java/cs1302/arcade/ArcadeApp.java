@@ -1,7 +1,7 @@
 package cs1302.arcade;
 
 import java.util.Random;
-
+import java.lang.Math;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -35,27 +35,18 @@ public class ArcadeApp extends Application {
      * node.
      * @return the key event handler
      */
-/*
-  private EventHandler<? super KeyEvent> createKeyHandlerTwenty() {
-  return event -> {
-  System.out.println(event);
-  if (event.getCode() == KeyCode.LEFT)
-  {
-  
-  }
-  if (event.getCode() == KeyCode.RIGHT) r.setX(r.getX() + 10.0);
-  // TODO bounds checking
-  };
-  } // createKeyHandler
-*/
     Scene twenty;
     GridPane grid;
     boolean whichGame = false;//when false, its 2048 , when true its, frogger
     int[][] cell;
+    int score;
+    VBox v;
     //frogger instance variables
     public Stage frogStage; 
     Stage stage;
-    
+    Text scores;
+    Text scoreV;
+    Text win;
     
     /** {@inheritdoc} */
     @Override
@@ -82,6 +73,7 @@ public class ArcadeApp extends Application {
             twentyStage.initModality(Modality.WINDOW_MODAL);
             twentyStage.initOwner(stage);
             twentyStage.sizeToScene();
+            twentyStage.setResizeable(false);
             twentyStage.show();
         };
         tf8.setOnAction(tf);
@@ -108,36 +100,449 @@ public class ArcadeApp extends Application {
         stage.setTitle("Welcome to our arcade !!!");
         stage.setScene(scene);
         stage.sizeToScene();
+        stage.setResizable(false);
         stage.show();
     } // start
     
-    
+    /**
+     * Sets the game
+     */
     public void setTF8(){
         HBox hbox = new HBox();
         grid = new GridPane();
         grid.setPrefSize(400,400);
         grid.setGridLinesVisible(true);
+        v = new VBox();
+        scores = new Text("Score: ");
+        scoreV = new Text("0");
+        win = new Text("You win!");
+        win.setVisible(false);
+        v.getChildren().addAll(scores,scoreV,win);
         //start image method
         //Adds all blanks except to one random
-        hbox.getChildren().add(grid);
+        hbox.getChildren().addAll(v,grid);
         twenty = new Scene(hbox,500,500);
+        createTFLeftHandler();
+        createTFRightHandler();
+        createTFUpHandler();
+        createTFDownHandler();
+        startGame();
+        setGrid();
         //twenty.add(hbox);
     }
-    public void startTF(){
-        cell = new int[4][4];
-//random on these
-        int row= 0;
-        int col = 0;
-        for(int i = 0; i < 4; i++){
-            for(int j= 0; j < 4; j++){
-                if(row == i && col == j){
-                    //add 2 to gridpane
-                }
-                else{
-                    //add blank
+    /**
+     * Sets the gridPanes based on the cell array
+     */
+    public void setGrid(){
+        //Loops through array and adds values
+        for(int i = 0; i < cell.length; i++){
+            for(int j = 0; j < cell.length; j++){
+                switch(cell[i][j]){
+                case 2:
+                    grid.add(new ImageView(new Image("tf/2.png")),j,i);
+                    break;
+                case 4:
+                    grid.add(new ImageView(new Image("tf/4.png")),j,i);
+                    break;
+                case 8:
+                    grid.add(new ImageView(new Image("tf/8.png")),j,i);
+                    break;
+                case 16:
+                    grid.add(new ImageView(new Image("tf/16.png")),j,i);
+                    break;
+                case 32:
+                    grid.add(new ImageView(new Image("tf/32.png")),j,i);
+                    break;
+                case 64:
+                    grid.add(new ImageView(new Image("tf/64.png")),j,i);
+                    break;
+                case 128:
+                    grid.add(new ImageView(new Image("tf/128.png")),j,i);
+                    break;
+                case 256:
+                    grid.add(new ImageView(new Image("tf/256.png")),j,i);
+                    break;
+                case 512:
+                    grid.add(new ImageView(new Image("tf/512.png")),j,i);
+                    break;
+                case 1024:
+                    grid.add(new ImageView(new Image("tf/1024.png")),j,i);
+                    break;
+                case 2048:
+                    grid.add(new ImageView(new Image("tf/2048.png")),j,i);
+                    break;
+                default:
+                     grid.add(new ImageView(new Image("tf/blank.png")),j,i);
+                    break;
                 }
             }
+
         }
+        scoreV.setText(String.valueOf(score));
+    }
+              
+    /**
+  * Sets random value
+  * @param a 2D int array to check if a value should be added
+  */
+  public void randoms(int[][] a){
+    //If a move happend and you haven't won
+    if(checkMove(a) && !checkWin()){
+      //Gets random values
+    int rand = (int)(Math.random() * 10);
+    int row = (int)(Math.random() * 4);
+    int col = (int)(Math.random() * 4);
+    //If array value is 'empty'
+    if(cell[row][col] == 0){
+      //Decides between adding a 2 or a 4
+      if(rand == 4){
+        cell[row][col] = 4;
+      }
+      else{
+        cell[row][col] =2;
+      }
+    }
+    //Calls itself until it gents an empty value
+    else{
+      randoms(a);
+    }
+  }
+  }
+  /**
+  * Sets up the variables to begin the game
+  */
+  public void startGame(){
+    cell = new int[4][4];
+    score = 0;
+    randoms(null);
+    randoms(null);
+  }
+  /**
+  * Fills out a temp array
+  * t 2D int array to fill out
+  */
+  public void createNew(int[][] t){
+    //Adds values from cell array into temp array
+    for(int i = 0; i < cell.length; i++ ){
+      for(int j= 0; j < cell.length; j++){
+        t[i][j] = cell[i][j];
+      }
+    }
+  }
+  /**
+  * Moves all rows in array to the right
+  */
+  public void moveRowRight(){
+    //Creates temp array
+    int[][] temp = new int[4][4];
+    createNew(temp);
+    //Calls moveRight 4 times to move each row
+    for(int i = 0; i < 4; i++){
+      moveRight(i,3);
+    }
+    randoms(temp);
+  }
+  /**
+  * Moves all rows in array to the left
+  */
+  public void moveRowLeft(){
+    //Creates temp array
+    int[][] temp = new int[4][4];
+    createNew(temp);
+    //Calls moveLeft 4 times to move each row
+    for(int i = 0; i < 4; i++){
+      moveLeft(i,0);
+    }
+    randoms(temp);
+  }
+  /**
+  * Moves all col in array down
+  */
+  public void moveColDown(){
+    //Creates temp array
+    int[][] temp = new int[4][4];
+    createNew(temp);
+    //Calls moveDown 4 times to move each col
+    for(int i = 0; i < 4; i++){
+      moveDown(3,i);
+    }
+    randoms(temp);
+  }
+  /**
+  * Moves all col in array down
+  */
+  public void moveColUp(){
+    //Creates temp array
+    int[][] temp = new int[4][4];
+    createNew(temp);
+    //Calls moveUp 4 times to move each col
+    for(int i = 0; i < 4; i++){
+      moveUp(0,i);
+    }
+    randoms(temp);
+  }
+  /**
+  * Moves one row to the right
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void moveRight(int i, int j){
+    //Checks if a non-zero number has a match next to it
+    if(j < 3 && cell[i][j] == cell[i][j+1] && cell[i][j] != 0){
+      combineRight(i,j);
+    }
+    //If cell is 'empty'
+    if(cell[i][j] == 0){
+    for(int w = j; w >= 0 ; w--)
+    {
+      if(cell[i][w] != 0){
+        cell[i][j] = cell[i][w];
+        cell[i][w] = 0;
+        break;
+      }
+    }
+    //Checks if a non-zero number has a match next to it
+    if(j < 3 && cell[i][j] == cell[i][j+1] && cell[i][j] != 0){
+      combineRight(i,j);
+    }
+  }
+    //Calls itself until all values of row moved
+    if(j > 0){
+      moveRight(i,j-1);
+    }
+  }
+  /**
+  * Moves one column down
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void moveDown(int i , int j){
+    //Checks if a non-zero number has a match next to it
+    if(i < 3 && cell[i][j] == cell[i+1][j] && cell[i][j] != 0){
+      combineDown(i,j);
+    }
+    //If cell is 'empty'
+    if(cell[i][j] == 0){
+    for(int w = i; w >= 0 ; w--)
+    {
+      if(cell[w][j] != 0){
+        cell[i][j] = cell[w][j];
+        cell[w][j] = 0;
+        break;
+      }
+    }
+    //Checks if a non-zero number has a match next to it
+    if(i < 3 && cell[i][j] == cell[i+1][j] && cell[i][j] != 0){
+      combineDown(i,j);
+    }
+  }
+//Calls itself until all values of column moved
+    if(i > 0){
+      moveDown(i-1,j);
+    }
+  }
+  /**
+  * Moves one row to the left
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void moveLeft(int i, int j){
+    //Checks if a non-zero number has a match next to it
+    if(j > 0 && cell[i][j] == cell[i][j-1] && cell[i][j] != 0){
+      combineLeft(i,j);
+    }
+    //If cell is 'empty'
+    if(cell[i][j] == 0){
+    for(int w = j; w <= 3 ; w++)
+    {
+      if(cell[i][w] != 0){
+        cell[i][j] = cell[i][w];
+        cell[i][w] = 0;
+        break;
+      }
+    }
+    //Checks if a non-zero number has a match next to it
+    if(j > 0 && cell[i][j] == cell[i][j-1] && cell[i][j] != 0){
+      combineLeft(i,j);
+    }
+  }
+//Calls itself until all values of row moved
+    if(j < 3){
+      moveLeft(i,j+1);
+    }
+  }
+  /**
+  * Moves one column up
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void moveUp(int i, int j){
+    //Checks if a non-zero number has a match next to it
+    if(i > 0 && cell[i][j] == cell[i-1][j] && cell[i][j] != 0){
+      combineUp(i,j);
+    }
+    //If cell is 'empty'
+    if(cell[i][j] == 0){
+    for(int w = i; w <= 3 ; w++)
+    {
+      if(cell[w][j] != 0){
+        cell[i][j] = cell[w][j];
+        cell[w][j] = 0;
+        break;
+      }
+    }
+    //Checks if a non-zero number has a match next to it
+    if(i > 0 && cell[i][j] == cell[i-1][j] && cell[i][j] != 0){
+      combineUp(i,j);
+    }
+  }
+//Calls itself until all values of column moved
+  if(i < 3){
+      moveUp(i+1,j);
+    }
+  }
+  /**
+  * Combines values next to eachother when moving right
+  * Updates Score
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void combineRight(int i, int j){
+    //Combines values to the right
+    cell[i][j+1] = (cell[i][j]  + cell[i][j+1]);
+    cell[i][j] = 0;
+    score(cell[i][j+1]);
+  }
+  /**
+  * Combines values next to eachother when moving down
+  * Updates Score
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void combineDown(int i, int j){
+    //Combines values down
+    cell[i+1][j] = (cell[i][j]  + cell[i+1][j]);
+    cell[i][j] = 0;
+    score(cell[i+1][j]);
+  }
+  /**
+  * Combines values next to eachother when moving left
+  * Updates Score
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void combineLeft(int i, int j){
+    //Combines values to the left
+    cell[i][j-1] = (cell[i][j]  + cell[i][j-1]);
+    cell[i][j] = 0;
+    score(cell[i][j-1]);
+  }
+  /**
+  * Combines values next to eachother when moving up
+  * Updates Score
+  * @param i integer for the row
+  * @param j integer for the column
+  */
+  public void combineUp(int i, int j){
+    //Combines values up
+    cell[i-1][j] = (cell[i][j]  + cell[i-1][j]);
+    cell[i][j] = 0;
+    score(cell[i-1][j]);
+  }
+  /**
+  * Updates the score
+  * @param s integer for the score increse
+  */
+  public void score(int s){
+    //adds s to score
+    score += s;
+  }
+  /**
+  * Checks if the array holds the int value 2048
+  * @return a boolean of whether or not you win
+  */
+  public boolean checkWin(){
+    //Goes through each cell of array to find 2048
+    for(int[] e: cell){
+      for(int a: e){
+        if(a == 2048){
+            win.setVisible(true);
+            return true;
+        }
+      }
+    }
+    return false;
+  }
+  /**
+  * Checks if the array has changes
+  * @return a boolean of whether or not the array changed
+  */
+  public boolean checkMove(int[][] temp){
+    //So that you can use random at start
+    if(temp == null){
+      return true;
+    }
+    //Checks to see if temp does not match cell array
+    for(int i = 0 ; i < temp.length; i++){
+      for(int j = 0; j < temp.length; j++){
+        if(temp[i][j] != cell[i][j]){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+
+    /** Method that creates handle for left movement.*/
+    public void createTFLeftHandler() {
+        twenty.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+ 
+                //left and update score
+                if (key.getCode() == KeyCode.LEFT && !checkWin())
+                {
+                    moveRowLeft();
+                    setGrid();
+                }
+            }
+            );
+    }
+    /** Method that creates handle for right movement.*/
+    public void createTFRightHandler() {
+        twenty.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+  
+                // move right and update score
+                if (key.getCode() == KeyCode.RIGHT &&  !checkWin())
+                {
+                    moveRowRight();
+                    setGrid();
+                }
+            }
+            );
+    }
+    /** Method that creates handle for up movement.*/
+    public void createTFUpHandler() {
+        twenty.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+                //if up key is pushed and out of bounds then stop timelines and throw death alert
+                //else move up and update score
+                if (key.getCode() == KeyCode.UP && !checkWin()){
+                    moveColUp();
+                    setGrid();
+                }
+            }
+            );
+    }
+    /** Method that creates handle for down movement.*/
+    public void createTFDownHandler() {
+        twenty.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+               
+                //move down and update score
+                if(key.getCode() == KeyCode.DOWN && !checkWin()){
+                    moveColDown();
+                    setGrid();
+                }
+            }
+            );
     }
     
 } // ArcadeApp
