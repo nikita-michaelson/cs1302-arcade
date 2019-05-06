@@ -63,3 +63,13 @@ that the Markdown is transformed into nice looking HTML.
     - Attempt Extra Credit
 3. **PROB:**
     - Time Management
+## TUE 2019-05-07 @ 11:%% PM EST
+
+1. **DONE:**
+    - Completed Frogger and 2048
+
+2. **TODO:**
+    - Summer Vacay
+
+3. **PROB:**
+    - Time Management 
